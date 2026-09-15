@@ -81,7 +81,7 @@ input[type=text]::placeholder{color:var(--text-muted)}
 .hero-title{font-size:24px}
 .hero-sub{font-size:12.5px}
 #setupView{gap:12px}
-.wrap{padding:14px 16px 10px}
+.wrap{max-width:1020px;padding:14px 16px 10px}
 .demo{position:sticky;top:68px;align-self:start}
 .demo-stage{padding:12px}
 @media(max-width:860px){.setup-two-col{grid-template-columns:1fr}.demo{position:static}}
@@ -163,7 +163,6 @@ body.invite-mode .demo{display:none}
 .progress i{display:block;height:100%;width:0%;background:var(--red);transition:width .35s}
 @media(max-width:680px){.demo-stage{flex-direction:column}.demo-phone{width:100%}}
 body.invite-mode .hero{display:none}
-body.invite-mode .setup-grid{grid-template-columns:1fr;max-width:520px;margin:0 auto}
 body.invite-mode .setup-grid .card:first-child{display:none}
 body.invite-mode #joinRow{border-color:rgba(220,38,38,.35);box-shadow:0 0 0 3px rgba(220,38,38,.12)}
 body.invite-mode #joinRow h2{font-size:16px}
@@ -235,7 +234,7 @@ body.invite-mode .invite-badge{display:inline-flex;align-items:center;gap:6px}
           <h2 data-i18n="create_title">ساخت چت جدید</h2>
         </div>
         <p data-i18n="create_desc">یک کد و لینک دعوت میگیری — بفرست برای دوستت.</p>
-        <button class="btn btn-primary" style="width:100%" onclick="createChat()"><svg class="lx-icon" viewBox="0 0 24 24" style="color:#fff"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 8v6"/><path d="M19 11h6"/></svg data-i18n="create_btn"> ساخت چت جدید</button>
+        <button class="btn btn-primary" style="width:100%" onclick="createChat()"><svg class="lx-icon" viewBox="0 0 24 24" style="color:#fff"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 8v6"/><path d="M19 11h6"/></svg> <span data-i18n="create_btn">ساخت چت جدید</span></button>
         <div class="hint" style="margin-top:8px" data-i18n="create_hint">بعد از ساخت، دکمهٔ <b style="color:var(--text)">QR</b> برای اسکن سریع فعال میشود.</div></div>
       </div>
 
@@ -249,7 +248,7 @@ body.invite-mode .invite-badge{display:inline-flex;align-items:center;gap:6px}
           <input id="joinInput" type="text" placeholder="کد مثل  a3f9-... یا لینک کامل" data-i18n-placeholder="ph_join">
           <button class="btn btn-primary" onclick="joinChat()" data-i18n="btn_enter">ورود</button>
         </div>
-        <div style="margin-top:8px"><button class="btn btn-sm" onclick="pasteJoin()"><svg class="lx-icon lx-icon--sm" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v3"/></svg data-i18n="btn_paste"> چسباندن</button></div>
+        <div style="margin-top:8px"><button class="btn btn-sm" onclick="pasteJoin()"><svg class="lx-icon lx-icon--sm" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v3"/></svg> <span data-i18n="btn_paste">چسباندن</span></button></div>
       </div>
     </div>
 
