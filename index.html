@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>رُک چت — چت سادهٔ دو نفره</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d1117;--card:#161b22;--card2:#1c2128;--border:#2d333b;--text:#e6edf3;--muted:#9198a1;--accent:#2ea043;--accent2:#3fb950;--blue:#58a6ff;--radius:16px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+a{color:var(--blue)}
+/* header */
+header{position:sticky;top:0;z-index:10;background:rgba(13,17,23,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px}
+.logo i{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#2ea043,#1f6feb);display:grid;place-items:center;font-style:normal;font-size:16px;color:#fff}
+.status{font-size:12px;padding:6px 12px;border-radius:99px;border:1px solid var(--border);background:var(--card2);color:var(--muted);display:flex;align-items:center;gap:6px}
+.status .dot{width:8px;height:8px;border-radius:50%;background:#656c76}
+.status.on .dot{background:var(--accent2);box-shadow:0 0 8px rgba(46,160,67,.6)}
+.status.on{color:var(--accent2);border-color:rgba(46,160,67,.3)}
+/* layout */
+.wrap{max-width:780px;width:100%;margin:0 auto;padding:24px 16px 20px;flex:1;display:flex;flex-direction:column;gap:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
+.card h2{font-size:15px;margin-bottom:6px}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:12px}
+label{font-size:12px;color:var(--muted);margin-bottom:6px;display:block}
+input{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:11px 14px;border-radius:12px;font-family:inherit;font-size:14px;outline:none;transition:.15s}
+input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(88,166,255,.15)}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row input{flex:1;min-width:160px}
+.btn{font-family:inherit;font-size:13px;padding:10px 16px;border-radius:99px;border:1px solid var(--border);background:var(--card2);color:var(--text);cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:6px;justify-content:center;white-space:nowrap}
+.btn:hover{border-color:#3d444d;background:#222830}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn-primary:hover{background:#2c974b}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-sm{padding:6px 12px;font-size:12px}
+.divider{height:1px;background:var(--border);margin:12px 0}
+/* chat */
+#chatView{display:none;flex-direction:column;gap:12px;flex:1;min-height:0}
+.info-bar{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.info-bar .id{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--bg);border:1px solid var(--border);padding:6px 10px;border-radius:8px;direction:ltr}
+.messages{flex:1;min-height:320px;max-height:52vh;overflow:auto;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
+.msg{max-width:78%;padding:10px 12px;border-radius:14px;font-size:13.5px;line-height:1.7;position:relative;word-break:break-word}
+.msg.me{align-self:flex-start;background:var(--accent);color:#fff;border-bottom-right-radius:4px}
+.msg.peer{align-self:flex-end;background:var(--card2);border:1px solid var(--border);color:var(--text);border-bottom-left-radius:4px}
+.msg .meta{font-size:11px;opacity:.7;margin-bottom:4px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.msg .actions{margin-top:6px;display:flex;gap:6px;flex-wrap:wrap}
+.msg .actions button{font-size:11px;padding:4px 8px;border-radius:99px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:inherit;cursor:pointer}
+.msg.peer .actions button{border-color:var(--border);background:var(--bg);color:var(--muted)}
+.file-card{border:1px dashed var(--border);border-radius:10px;padding:10px;margin-top:6px;background:rgba(255,255,255,.06)}
+.file-card a{font-size:12px}
+.composer{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;display:flex;flex-direction:column;gap:10px}
+.composer-row{display:flex;gap:8px;align-items:center}
+.composer-row input[type=text]{flex:1}
+.file-input{font-size:12px}
+.hint{font-size:11.5px;color:var(--muted)}
+.footer{text-align:center;font-size:11px;color:#656c76;padding:14px;border-top:1px solid var(--border);margin-top:8px}
+#setupView{display:flex;flex-direction:column;gap:16px}
+.badge{font-size:11px;padding:4px 8px;border-radius:99px;border:1px solid var(--border);background:var(--card2);color:var(--muted)}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo"><i>◐</i> رُک چت</div>
+  <div class="status" id="status"><span class="dot"></span><span id="statusText">آماده</span></div>
+</header>
+
+<div class="wrap">
+  <!-- SETUP -->
+  <div id="setupView">
+    <div class="card">
+      <h2>سلام! اسمت چیه؟</h2>
+      <p>به جای نام کاربری، فقط یک <b style="color:var(--text)">نام نمایشی</b> وارد کن — همین نام برای طرف مقابل نمایش داده میشه. چت دوطرفه، متن + فایل (هر فرمتی).</p>
+      <label>نام نمایشی</label>
+      <input id="nameInput" placeholder="مثلاً رشاد" maxlength="24">
+      <div class="row" style="margin-top:10px">
+        <button class="btn btn-primary" id="createBtn" onclick="createChat()">➕ ساخت چت جدید</button>
+        <button class="btn" onclick="document.getElementById('joinRow').scrollIntoView({behavior:'smooth'})">🔗 پیوستن با لینک/کد</button>
+      </div>
+      <div class="hint" style="margin-top:8px">با <b>ساخت</b> یک کد/لینک میگیری و برای دوستت میفرستی. او با <b>پیوستن</b> وصل میشه — بدون ثبت نام.</div>
+    </div>
+
+    <div class="card" id="joinRow">
+      <h2>پیوستن به چت</h2>
+      <p>کد یا لینک دوستت رو اینجا بذار:</p>
+      <div class="row">
+        <input id="joinInput" placeholder="کد مثل  a3f9-... یا لینک کامل">
+        <button class="btn btn-primary" onclick="joinChat()">ورود</button>
+        <button class="btn" onclick="pasteJoin()">📋 چسباندن</button>
+      </div>
+    </div>
+
+    <div class="card" style="background:linear-gradient(135deg,rgba(46,160,67,.08),rgba(88,166,255,.08));border-color:rgba(46,160,67,.2)">
+      <h2>✨ ویژگیها</h2>
+      <p style="margin:0">متن کپی شونده · ارسال هر فایل (عکس، ویدیو، pdf، zip...) · مستقیم P2P و روی GitHub Pages · بدون سرور و بدون لاگین</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px">
+        <span class="badge">🔒 P2P رمزگذاری شده</span>
+        <span class="badge">📎 هر فرمت</span>
+        <span class="badge">📋 کپی متن</span>
+        <span class="badge">🚀 GitHub Pages</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAT -->
+  <div id="chatView">
+    <div class="info-bar">
+      <span style="font-size:12px;color:var(--muted)">کد چت:</span>
+      <span class="id" id="myId">—</span>
+      <button class="btn btn-sm" onclick="copyId()">📋 کپی کد</button>
+      <button class="btn btn-sm" onclick="copyLink()">🔗 کپی لینک</button>
+      <span id="peerNameBadge" class="badge" style="margin-right:auto">در انتظار اتصال...</span>
+      <button class="btn btn-sm" onclick="leaveChat()">خروج</button>
+    </div>
+
+    <div class="messages" id="messages">
+      <div style="text-align:center;color:var(--muted);font-size:12px;padding:20px">پیامی هنوز نیست — لینک رو برای دوستت بفرست تا وصل بشه.</div>
+    </div>
+
+    <div class="composer">
+      <div class="composer-row">
+        <input type="text" id="msgInput" placeholder="پیام بنویس... (Enter برای ارسال)" onkeydown="if(event.key==='Enter') sendText()">
+        <button class="btn btn-primary" onclick="sendText()">ارسال</button>
+      </div>
+      <div class="composer-row">
+        <input type="file" id="fileInput" class="file-input" style="flex:1">
+        <button class="btn" onclick="sendFile()">📎 ارسال فایل</button>
+        <button class="btn" onclick="clearChat()">🗑 پاک کردن</button>
+      </div>
+      <div class="hint">فایلها مستقیم بین دو مرورگر رد و بدل میشن — برای فایلهای خیلی بزرگ (بالای 50MB) ممکنه کمی طول بکشه.</div>
+    </div>
+  </div>
+
+  <div class="footer">ساخته شده برای GitHub Pages — فقط index.html را در ریپو بذار و Pages را روشن کن. <span style="color:var(--muted)">PeerJS Cloud (رایگان) برای برقراری اتصال استفاده میشود؛ پیامها P2P و ذخیره نمیشوند.</span></div>
+</div>
+
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script>
+let peer=null, conn=null, myName='', myId='', isHost=false;
+const $ = s => document.getElementById(s);
+function setStatus(t,on){ $('statusText').textContent=t; document.getElementById('status').classList.toggle('on', !!on); }
+function genId(){ return Math.random().toString(36).slice(2,7)+'-'+Math.random().toString(36).slice(2,7); }
+
+// parse ?join=ID
+(function(){
+  const u = new URL(location.href);
+  const j = u.searchParams.get('join');
+  if(j) $('joinInput').value=j;
+})();
+
+function ensureName(){
+  const n = $('nameInput').value.trim() || localStorage.getItem('rok_name') || '';
+  if(!n){ alert('اول اسمت رو وارد کن 🙂'); $('nameInput').focus(); return null; }
+  localStorage.setItem('rok_name', n);
+  return n;
+}
+$('nameInput').value = localStorage.getItem('rok_name')||'';
+$('nameInput').addEventListener('keydown', e=>{ if(e.key==='Enter') createChat(); });
+
+function createChat(){
+  const n = ensureName(); if(!n) return;
+  myName=n; isHost=true;
+  myId = genId();
+  startPeer(myId);
+}
+function joinChat(){
+  const n = ensureName(); if(!n) return;
+  let raw = $('joinInput').value.trim();
+  if(!raw){ alert('کد یا لینک رو وارد کن'); return; }
+  // extract ?join=xxx or last part
+  try{
+    const uu=new URL(raw);
+    raw = uu.searchParams.get('join') || uu.hash.slice(1) || raw;
+  }catch(e){}
+  raw = raw.replace(/^#/, '').trim();
+  if(!raw){ alert('کد نامعتبره'); return; }
+  myName=n; isHost=false;
+  myId = genId();
+  startPeer(myId, raw);
+}
+async function pasteJoin(){
+  try{ const t=await navigator.clipboard.readText(); $('joinInput').value=t; }catch(e){ alert('دسترسی به کلیپبورد ممکن نیست — دستی Paste کن'); }
+}
+
+function startPeer(id, joinTo){
+  setStatus('در حال اتصال...', false);
+  peer = new Peer(id, { debug:0 });
+  peer.on('open', _id=>{
+    myId=_id; $('myId').textContent=myId;
+    $('setupView').style.display='none';
+    $('chatView').style.display='flex';
+    setStatus(joinTo ? 'وصل شدن به دوست...' : 'آماده — لینک را بفرست', true);
+    if(joinTo) connectTo(joinTo);
+  });
+  peer.on('connection', c=>{ setupConn(c); });
+  peer.on('error', e=>{ console.error(e); setStatus('خطا: '+e.type, false); alert('خطا: '+e.message); });
+  peer.on('disconnected', ()=>{ setStatus('قطع شد — تلاش مجدد...', false); peer.reconnect(); });
+}
+
+function connectTo(peerId){
+  const c = peer.connect(peerId, { reliable:true });
+  setupConn(c);
+}
+
+function setupConn(c){
+  conn=c;
+  conn.on('open', ()=>{
+    setStatus('متصل ✓', true);
+    $('peerNameBadge').textContent='متصل به '+ (c.peer||'دوست');
+    // handshake name
+    conn.send({type:'hello', name:myName});
+    addSys('✅ متصل شدید — حالا میتونید چت کنید');
+  });
+  conn.on('data', onData);
+  conn.on('close', ()=>{ setStatus('ارتباط قطع شد', false); addSys('ارتباط قطع شد'); $('peerNameBadge').textContent='قطع شد'; });
+  conn.on('error', e=>{ addSys('خطا: '+e.message); });
+}
+
+function onData(d){
+  if(!d || !d.type) return;
+  if(d.type==='hello'){
+    $('peerNameBadge').textContent = d.name ? 'طرف مقابل: '+d.name : 'متصل';
+    // reply hello if host
+    if(isHost) conn.send({type:'hello', name:myName});
+  } else if(d.type==='text'){
+    addMsg(d.text, false, d.name, d.time);
+  } else if(d.type==='file'){
+    addFileMsg(d, false);
+  }
+}
+
+function sendText(){
+  const t=$('msgInput').value.trim();
+  if(!t) return;
+  if(!conn || conn.open===false){ alert('هنوز وصل نیستی'); return; }
+  const payload={type:'text', text:t, name:myName, time: Date.now()};
+  conn.send(payload);
+  addMsg(t, true, myName, payload.time);
+  $('msgInput').value='';
+}
+function sendFile(){
+  const f=$('fileInput').files[0];
+  if(!f){ alert('اول یک فایل انتخاب کن'); return; }
+  if(!conn || !conn.open){ alert('هنوز وصل نیستی'); return; }
+  if(f.size > 80*1024*1024){ if(!confirm('فایل بالای 80MB ممکنه کند/ناموفق باشه — ادامه بدم؟')) return; }
+  const reader=new FileReader();
+  reader.onload = ()=>{
+    const payload={type:'file', name:f.name, size:f.size, mime:f.type||'application/octet-stream', data: reader.result, sender:myName, time:Date.now()};
+    try{ conn.send(payload); addFileMsg(payload, true); $('fileInput').value=''; }
+    catch(e){ alert('ارسال ناموفق: '+e.message); }
+  };
+  reader.readAsArrayBuffer(f);
+}
+
+function addMsg(text, me, name, time){
+  const box=$('messages');
+  if(box.children.length===1 && box.children[0].textContent.includes('پیامی هنوز نیست')) box.innerHTML='';
+  const div=document.createElement('div');
+  div.className='msg '+(me?'me':'peer');
+  const when = time ? new Date(time).toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'}) : '';
+  div.innerHTML = '<div class="meta"><b>'+esc(name||(me?'تو':'دوست'))+'</b><span>'+when+'</span></div>'
+    + '<div class="txt">'+esc(text)+'</div>'
+    + '<div class="actions"><button onclick="copyText(this)">📋 کپی متن</button>'+(me?'':'')+'</div>';
+  box.appendChild(div); box.scrollTop=box.scrollHeight;
+}
+function addFileMsg(d, me){
+  const box=$('messages');
+  if(box.children.length===1 && box.children[0].textContent.includes('پیامی هنوز نیست')) box.innerHTML='';
+  const div=document.createElement('div');
+  div.className='msg '+(me?'me':'peer');
+  const when = d.time ? new Date(d.time).toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'}) : '';
+  // build blob url for receiver
+  let url='', sizeStr=formatSize(d.size);
+  if(!me && d.data){
+    const blob=new Blob([d.data], {type:d.mime});
+    url=URL.createObjectURL(blob);
+  } else if(me && d.data){
+    // for sender, create url too
+    const blob=new Blob([d.data], {type:d.mime});
+    url=URL.createObjectURL(blob);
+  }
+  div.innerHTML = '<div class="meta"><b>'+esc(d.sender|| (me?myName:'دوست'))+'</b><span>'+when+'</span><span>'+sizeStr+'</span></div>'
+    + '<div>📎 '+esc(d.name)+'</div>'
+    + '<div class="file-card">'+(url?'<a href="'+url+'" download="'+escAttr(d.name)+'">⬇ دانلود / نمایش فایل</a>':'<span style="color:var(--muted)">در حال آمادهسازی...</span>')+' <span style="font-size:11px;color:var(--muted)">'+esc(d.mime)+'</span></div>';
+  box.appendChild(div); box.scrollTop=box.scrollHeight;
+}
+function addSys(t){
+  const box=$('messages');
+  if(box.children.length===1 && box.children[0].textContent.includes('پیامی هنوز نیست')) box.innerHTML='';
+  const d=document.createElement('div');
+  d.style.cssText='text-align:center;font-size:11px;color:var(--muted);padding:6px;background:var(--card2);border:1px solid var(--border);border-radius:99px;align-self:center';
+  d.textContent=t; box.appendChild(d); box.scrollTop=box.scrollHeight;
+}
+function copyText(btn){
+  const txt=btn.closest('.msg').querySelector('.txt').innerText;
+  navigator.clipboard.writeText(txt).then(()=>{ const o=btn.textContent; btn.textContent='✓ کپی شد'; setTimeout(()=>btn.textContent=o,1200); });
+}
+function copyId(){ navigator.clipboard.writeText($('myId').textContent).then(()=>alert('کد کپی شد')); }
+function copyLink(){
+  const link = location.origin+location.pathname+'?join='+encodeURIComponent($('myId').textContent);
+  navigator.clipboard.writeText(link).then(()=>alert('لینک کپی شد:\n'+link));
+}
+function clearChat(){ if(confirm('همه پیامها پاک بشن؟')) $('messages').innerHTML='<div style="text-align:center;color:var(--muted);font-size:12px;padding:20px">پاک شد.</div>'; }
+function leaveChat(){ if(confirm('خارج بشی؟')) location.href=location.pathname; }
+function esc(s){ return String(s).replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])); }
+function escAttr(s){ return esc(s).replace(/"/g,'&quot;'); }
+function formatSize(b){ if(b<1024) return b+' B'; if(b<1024*1024) return (b/1024).toFixed(1)+' KB'; return (b/1024/1024).toFixed(1)+' MB'; }
+</script>
+</body>
+</html>
