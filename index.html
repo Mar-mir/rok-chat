@@ -4,155 +4,263 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>رُک چت — چت سادهٔ دو نفره</title>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0d1117;--card:#161b22;--card2:#1c2128;--border:#2d333b;--text:#e6edf3;--muted:#9198a1;--accent:#2ea043;--accent2:#3fb950;--blue:#58a6ff;--radius:16px}
+:root{
+  --bg:#0A0A0B;--surface:#141416;--surface-2:#1C1C1F;--surface-3:#242428;
+  --border:#2A2A2E;--border-light:#3A3A3E;
+  --red:#DC2626;--red-dark:#991B1B;--red-glow:rgba(220,38,38,.15);
+  --gold:#F59E0B;--green:#22C55E;
+  --text:#F5F5F5;--text-secondary:#A1A1AA;--text-muted:#71717A;
+  --radius:12px;--radius-pill:100px;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
-a{color:var(--blue)}
+body{font-family:'Space Grotesk',Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+a{color:var(--red)}
+/* icons */
+.lx-icon{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.lx-icon--sm{width:14px;height:14px}
+.lx-icon--lg{width:22px;height:22px}
 /* header */
-header{position:sticky;top:0;z-index:10;background:rgba(13,17,23,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px}
-.logo i{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#2ea043,#1f6feb);display:grid;place-items:center;font-style:normal;font-size:16px;color:#fff}
-.status{font-size:12px;padding:6px 12px;border-radius:99px;border:1px solid var(--border);background:var(--card2);color:var(--muted);display:flex;align-items:center;gap:6px}
-.status .dot{width:8px;height:8px;border-radius:50%;background:#656c76}
-.status.on .dot{background:var(--accent2);box-shadow:0 0 8px rgba(46,160,67,.6)}
-.status.on{color:var(--accent2);border-color:rgba(46,160,67,.3)}
+header{position:sticky;top:0;z-index:20;background:rgba(10,10,11,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-mark{width:36px;height:36px;border-radius:10px;background:var(--red);display:grid;place-items:center;color:#fff;box-shadow:0 4px 18px var(--red-glow)}
+.brand-name{font-family:'Instrument Serif',serif;font-size:22px;font-weight:400;letter-spacing:-.02em}
+.brand-name i{font-style:italic;color:var(--red)}
+.brand-sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;color:var(--text-muted);text-transform:uppercase}
+.status{font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 12px;border-radius:var(--radius-pill);border:1px solid var(--border);background:var(--surface-2);color:var(--text-muted);display:flex;align-items:center;gap:7px}
+.status .dot{width:8px;height:8px;border-radius:50%;background:var(--text-muted);transition:.2s}
+.status.on{color:var(--green);border-color:rgba(34,197,94,.25);background:rgba(34,197,94,.08)}
+.status.on .dot{background:var(--green);box-shadow:0 0 8px rgba(34,197,94,.6)}
 /* layout */
-.wrap{max-width:780px;width:100%;margin:0 auto;padding:24px 16px 20px;flex:1;display:flex;flex-direction:column;gap:16px}
-.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
-.card h2{font-size:15px;margin-bottom:6px}
-.card p{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:12px}
-label{font-size:12px;color:var(--muted);margin-bottom:6px;display:block}
-input{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:11px 14px;border-radius:12px;font-family:inherit;font-size:14px;outline:none;transition:.15s}
-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(88,166,255,.15)}
-.row{display:flex;gap:10px;flex-wrap:wrap}
+.wrap{max-width:780px;width:100%;margin:0 auto;padding:18px 14px 14px;flex:1;display:flex;flex-direction:column;gap:14px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px}
+.card-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.card-head .iconbox{width:36px;height:36px;border-radius:10px;background:var(--surface-3);border:1px solid var(--border);display:grid;place-items:center;color:var(--text-secondary)}
+.card h2{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700}
+.card p{font-size:12.5px;color:var(--text-secondary);line-height:1.8;margin-bottom:12px}
+label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;color:var(--text-muted);margin-bottom:7px;display:block;text-transform:uppercase}
+input[type=text]{width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--text);padding:12px 14px;border-radius:12px;font-family:inherit;font-size:14px;outline:none;transition:.15s}
+input[type=text]:focus{border-color:var(--red);box-shadow:0 0 0 3px var(--red-glow)}
+input[type=text]::placeholder{color:var(--text-muted)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .row input{flex:1;min-width:160px}
-.btn{font-family:inherit;font-size:13px;padding:10px 16px;border-radius:99px;border:1px solid var(--border);background:var(--card2);color:var(--text);cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:6px;justify-content:center;white-space:nowrap}
-.btn:hover{border-color:#3d444d;background:#222830}
-.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
-.btn-primary:hover{background:#2c974b}
+.btn{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;padding:11px 18px;border-radius:var(--radius-pill);border:1px solid var(--border);background:var(--surface-2);color:var(--text);cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:7px;justify-content:center;white-space:nowrap}
+.btn:hover{border-color:var(--border-light);background:var(--surface-3)}
+.btn-primary{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 6px 18px var(--red-glow)}
+.btn-primary:hover{background:var(--red-dark);border-color:var(--red-dark)}
+.btn-ghost{background:transparent}
+.btn-sm{padding:7px 13px;font-size:12px}
 .btn:disabled{opacity:.5;cursor:not-allowed}
-.btn-sm{padding:6px 12px;font-size:12px}
 .divider{height:1px;background:var(--border);margin:12px 0}
-/* chat */
-#chatView{display:none;flex-direction:column;gap:12px;flex:1;min-height:0}
-.info-bar{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.info-bar .id{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--bg);border:1px solid var(--border);padding:6px 10px;border-radius:8px;direction:ltr}
-.messages{flex:1;min-height:320px;max-height:52vh;overflow:auto;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
-.msg{max-width:78%;padding:10px 12px;border-radius:14px;font-size:13.5px;line-height:1.7;position:relative;word-break:break-word}
-.msg.me{align-self:flex-start;background:var(--accent);color:#fff;border-bottom-right-radius:4px}
-.msg.peer{align-self:flex-end;background:var(--card2);border:1px solid var(--border);color:var(--text);border-bottom-left-radius:4px}
-.msg .meta{font-size:11px;opacity:.7;margin-bottom:4px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-.msg .actions{margin-top:6px;display:flex;gap:6px;flex-wrap:wrap}
-.msg .actions button{font-size:11px;padding:4px 8px;border-radius:99px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:inherit;cursor:pointer}
-.msg.peer .actions button{border-color:var(--border);background:var(--bg);color:var(--muted)}
-.file-card{border:1px dashed var(--border);border-radius:10px;padding:10px;margin-top:6px;background:rgba(255,255,255,.06)}
-.file-card a{font-size:12px}
-.composer{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;display:flex;flex-direction:column;gap:10px}
+.badge{font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 10px;border-radius:var(--radius-pill);border:1px solid var(--border);background:var(--surface-2);color:var(--text-secondary)}
+/* hero setup */
+.hero{border-radius:20px;overflow:hidden;border:1px solid var(--border);background:linear-gradient(135deg,var(--surface) 0%, #1a0f0f 55%, #1a1510 100%);position:relative;padding:22px 18px}
+.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(600px 220px at 85% -10%, rgba(220,38,38,.18), transparent 60%), radial-gradient(500px 200px at 10% 120%, rgba(245,158,11,.1), transparent 60%);pointer-events:none}
+.hero-inner{position:relative;display:flex;flex-direction:column;gap:6px}
+.hero-title{font-family:'Instrument Serif',serif;font-size:32px;line-height:1;letter-spacing:-.03em}
+.hero-title em{font-style:italic;color:var(--red);font-weight:400}
+.hero-sub{font-size:13px;color:var(--text-secondary);max-width:520px;line-height:1.7}
+.hero-pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.pill{font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 10px;border-radius:var(--radius-pill);border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--text-secondary);display:flex;align-items:center;gap:6px}
+.pill b{color:var(--text)}
+/* avatar */
+.avatar-wrap{display:flex;align-items:center;gap:14px;margin:14px 0 14px}
+.avatar{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:22px;color:#fff;flex-shrink:0;border:2px solid var(--border);overflow:hidden;position:relative;background:var(--red);box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.avatar-initials{letter-spacing:-.02em}
+.avatar-actions{display:flex;flex-direction:column;gap:8px}
+.palette{display:flex;gap:7px;flex-wrap:wrap}
+.swatch{width:26px;height:26px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:.15s;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.swatch.active{border-color:#fff;box-shadow:0 0 0 2px var(--bg), 0 0 0 4px currentColor}
+.upload-btn{font-size:11px;padding:6px 10px;border-radius:var(--radius-pill);border:1px dashed var(--border-light);background:transparent;color:var(--text-secondary);cursor:pointer;font-family:'JetBrains Mono',monospace}
+.upload-btn:hover{border-color:var(--text-muted);color:var(--text)}
+.setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:680px){.setup-grid{grid-template-columns:1fr}}
+/* chat — telegram style */
+#chatView{display:none;flex-direction:column;gap:10px;flex:1;min-height:0}
+.tg-header{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:10px}
+.tg-avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0;overflow:hidden;border:1px solid var(--border)}
+.tg-avatar img{width:100%;height:100%;object-fit:cover}
+.tg-peer{flex:1;min-width:0}
+.tg-peer b{font-size:13px;font-weight:700;display:block;line-height:1.2}
+.tg-peer span{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted)}
+.tg-actions{display:flex;gap:6px}
+.icon-btn{width:36px;height:36px;border-radius:50%;background:var(--surface-2);border:1px solid var(--border);display:grid;place-items:center;color:var(--text-secondary);cursor:pointer;transition:.15s}
+.icon-btn:hover{background:var(--surface-3);color:var(--text);border-color:var(--border-light)}
+.info-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:10px 12px}
+.info-bar .id{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--bg);border:1px solid var(--border);padding:7px 10px;border-radius:8px;direction:ltr;color:var(--text-secondary)}
+.messages{flex:1;min-height:380px;max-height:58vh;overflow:auto;background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px;scroll-behavior:smooth;position:relative}
+/* telegram wallpaper subtle */
+.messages::before{content:'';position:absolute;inset:0;opacity:.04;background-image:radial-gradient(circle at 1px 1px, #fff 1px, transparent 0);background-size:22px 22px;pointer-events:none}
+.msg{max-width:74%;padding:8px 10px 18px 10px;border-radius:18px;font-size:13.5px;line-height:1.65;position:relative;word-break:break-word;box-shadow:0 1px 2px rgba(0,0,0,.25)}
+.msg.me{align-self:flex-start;background:var(--red);color:#fff;border-bottom-right-radius:5px}
+.msg.peer{align-self:flex-end;background:var(--surface-2);border:1px solid var(--border);color:var(--text);border-bottom-left-radius:5px}
+.msg .meta{font-size:11px;opacity:.85;margin-bottom:3px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.msg.me .meta{color:rgba(255,255,255,.85)}
+.msg.peer .meta{color:var(--text-secondary)}
+.msg .txt{white-space:pre-wrap}
+.msg .time{position:absolute;left:10px;bottom:4px;font-family:'JetBrains Mono',monospace;font-size:10px;opacity:.75;direction:ltr}
+.msg.me .time{color:rgba(255,255,255,.85)}
+.msg.peer .time{color:var(--text-muted)}
+.msg .actions{margin-top:7px;display:flex;gap:6px;flex-wrap:wrap}
+.msg .actions button{font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 9px;border-radius:var(--radius-pill);border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.14);color:#fff;cursor:pointer}
+.msg.peer .actions button{border-color:var(--border);background:var(--surface);color:var(--text-secondary)}
+.file-card{border:1px dashed var(--border-light);border-radius:10px;padding:9px;margin-top:6px;background:rgba(255,255,255,.06);font-size:12px}
+.msg.peer .file-card{background:var(--surface);border-color:var(--border)}
+.composer{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:10px;display:flex;flex-direction:column;gap:8px}
 .composer-row{display:flex;gap:8px;align-items:center}
-.composer-row input[type=text]{flex:1}
-.file-input{font-size:12px}
-.hint{font-size:11.5px;color:var(--muted)}
-.footer{text-align:center;font-size:11px;color:#656c76;padding:14px;border-top:1px solid var(--border);margin-top:8px}
-#setupView{display:flex;flex-direction:column;gap:16px}
-.badge{font-size:11px;padding:4px 8px;border-radius:99px;border:1px solid var(--border);background:var(--card2);color:var(--muted)}
+.composer-row input[type=text]{flex:1;background:var(--surface-2)}
+.file-input{font-size:12px;color:var(--text-secondary)}
+.hint{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted)}
+#setupView{display:flex;flex-direction:column;gap:14px}
 /* qr modal */
-.qr-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.qr-overlay{position:fixed;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
 .qr-overlay.open{display:flex}
-.qr-box{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px;max-width:360px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5)}
-.qr-box h3{font-size:15px;margin-bottom:6px}
-.qr-box p{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:12px}
+.qr-box{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:20px;max-width:360px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.55)}
+.qr-box h3{font-family:'Instrument Serif',serif;font-size:18px;margin-bottom:6px}
+.qr-box p{font-size:12px;color:var(--text-secondary);line-height:1.7;margin-bottom:12px}
 .qr-img-wrap{background:#fff;border-radius:16px;padding:14px;display:inline-block;margin-bottom:12px}
 .qr-img-wrap img{display:block;width:220px;height:220px}
-.qr-link{font-family:'JetBrains Mono',monospace;font-size:11px;word-break:break-all;background:var(--bg);border:1px solid var(--border);padding:8px 10px;border-radius:10px;direction:ltr;color:var(--muted);margin-bottom:12px}
+.qr-link{font-family:'JetBrains Mono',monospace;font-size:11px;word-break:break-all;background:var(--bg);border:1px solid var(--border);padding:8px 10px;border-radius:10px;direction:ltr;color:var(--text-muted);margin-bottom:12px}
 </style>
 </head>
 <body>
 <header>
-  <div class="logo"><i>◐</i> رُک چت</div>
+  <div class="brand">
+    <div class="brand-mark">
+      <svg class="lx-icon lx-icon--lg" viewBox="0 0 24 24" style="color:#fff"><path d="M21 11.5a8.5 8.5 0 0 1-12 7.7"/><path d="M21 11.5a8.5 8.5 0 0 0-7.5-7.5"/><path d="M4 11.5a8.5 8.5 0 0 0 12 7.7"/><path d="M3 11.5h18"/><path d="M12 3v16"/></svg>
+    </div>
+    <div>
+      <div class="brand-name">رُک <i>چت</i></div>
+      <div class="brand-sub">rok chat · p2p</div>
+    </div>
+  </div>
   <div class="status" id="status"><span class="dot"></span><span id="statusText">آماده</span></div>
 </header>
 
 <div class="wrap">
   <!-- SETUP -->
   <div id="setupView">
+    <div class="hero">
+      <div class="hero-inner">
+        <div class="hero-title">چتِ <em>رُک</em> و ساده — دو نفره</div>
+        <div class="hero-sub">بدون ثبتنام، بدون سرور. فقط یک نام و یک آواتار — لینک را بفرست، دوستت با یک اسکن وصل میشود.</div>
+        <div class="hero-pills">
+          <span class="pill"><svg class="lx-icon lx-icon--sm" viewBox="0 0 24 24"><path d="M12 22c5 0 9-4 9-9s-4-9-9-9-9 4-9 9 4 9 9 9Z"/><path d="M8 12h8"/><path d="M12 8v8"/></svg> P2P رمزگذاری شده</span>
+          <span class="pill"><svg class="lx-icon lx-icon--sm" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M10 13H8"/><path d="M16 17H8"/><path d="M13 13h3"/></svg> هر فرمتی — md / html</span>
+          <span class="pill"><svg class="lx-icon lx-icon--sm" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 8h4"/><path d="M7 12h10"/></svg> استایل تلگرام</span>
+        </div>
+      </div>
+    </div>
+
     <div class="card">
-      <h2>سلام! اسمت چیه؟</h2>
-      <p>به جای نام کاربری، فقط یک <b style="color:var(--text)">نام نمایشی</b> وارد کن — همین نام برای طرف مقابل نمایش داده میشه. چت دوطرفه، متن + فایل (هر فرمتی).</p>
+      <div class="card-head">
+        <div class="iconbox"><svg class="lx-icon" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <h2>آواتار و نام نمایشی</h2>
+        <span class="badge" style="margin-right:auto">به جای نام کاربری</span>
+      </div>
+      <p>همین نام و آواتار برای طرف مقابل نمایش داده میشود. رنگ را انتخاب کن یا عکس آپلود کن.</p>
+      <div class="avatar-wrap">
+        <div class="avatar" id="avatarPreview"><span class="avatar-initials" id="avatarInitials">؟</span></div>
+        <div class="avatar-actions">
+          <div class="palette" id="palette"></div>
+          <label class="upload-btn" for="avatarFile">آپلود عکس
+            <input id="avatarFile" type="file" accept="image/*" style="display:none" onchange="onAvatarFile(this)">
+          </label>
+        </div>
+      </div>
       <label>نام نمایشی</label>
-      <input id="nameInput" placeholder="مثلاً رشاد" maxlength="24">
-      <div class="row" style="margin-top:10px">
-        <button class="btn btn-primary" id="createBtn" onclick="createChat()">➕ ساخت چت جدید</button>
-        <button class="btn" onclick="document.getElementById('joinRow').scrollIntoView({behavior:'smooth'})">🔗 پیوستن با لینک/کد</button>
-      </div>
-      <div class="hint" style="margin-top:8px">با <b>ساخت</b> یک کد/لینک میگیری و برای دوستت میفرستی. او با <b>پیوستن</b> وصل میشه — بدون ثبت نام.</div>
+      <input id="nameInput" type="text" placeholder="مثلاً رشاد" maxlength="24" oninput="onNameInput()">
     </div>
 
-    <div class="card" id="joinRow">
-      <h2>پیوستن به چت</h2>
-      <p>کد یا لینک دوستت رو اینجا بذار:</p>
-      <div class="row">
-        <input id="joinInput" placeholder="کد مثل  a3f9-... یا لینک کامل">
-        <button class="btn btn-primary" onclick="joinChat()">ورود</button>
-        <button class="btn" onclick="pasteJoin()">📋 چسباندن</button>
+    <div class="setup-grid">
+      <div class="card" style="border-color:rgba(220,38,38,.25);background:linear-gradient(180deg,var(--surface) 0%, rgba(220,38,38,.06) 100%)">
+        <div class="card-head">
+          <div class="iconbox" style="background:var(--red);border-color:var(--red);color:#fff"><svg class="lx-icon" viewBox="0 0 24 24" style="color:#fff"><path d="M12 5v14"/><path d="M5 12h14"/></svg></div>
+          <h2>ساخت چت جدید</h2>
+        </div>
+        <p>یک کد و لینک دعوت میگیری — بفرست برای دوستت.</p>
+        <button class="btn btn-primary" style="width:100%" onclick="createChat()"><svg class="lx-icon" viewBox="0 0 24 24" style="color:#fff"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 8v6"/><path d="M19 11h6"/></svg> ساخت چت جدید</button>
+        <div class="hint" style="margin-top:8px">بعد از ساخت، دکمهٔ <b style="color:var(--text)">QR</b> برای اسکن سریع فعال میشود.</div>
       </div>
-    </div>
 
-    <div class="card" style="background:linear-gradient(135deg,rgba(46,160,67,.08),rgba(88,166,255,.08));border-color:rgba(46,160,67,.2)">
-      <h2>✨ ویژگیها</h2>
-      <p style="margin:0">متن کپی شونده · ارسال هر فایل (عکس، ویدیو، pdf، zip...) · مستقیم P2P و روی GitHub Pages · بدون سرور و بدون لاگین</p>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px">
-        <span class="badge">🔒 P2P رمزگذاری شده</span>
-        <span class="badge">📎 هر فرمت</span>
-        <span class="badge">📋 کپی متن</span>
-        <span class="badge">🚀 GitHub Pages</span>
+      <div class="card">
+        <div class="card-head">
+          <div class="iconbox"><svg class="lx-icon" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5 0l3-3a5 5 0 0 0-7.07-7.07L13 3"/><path d="M14 11a5 5 0 0 0-7.5 0l-3 3a5 5 0 0 0 7.07 7.07L11 21"/></svg></div>
+          <h2>پیوستن با لینک / کد</h2>
+        </div>
+        <p>کد یا لینک دوستت را اینجا بگذار:</p>
+        <div class="row">
+          <input id="joinInput" type="text" placeholder="کد مثل  a3f9-... یا لینک کامل">
+          <button class="btn btn-primary" onclick="joinChat()">ورود</button>
+        </div>
+        <div style="margin-top:8px"><button class="btn btn-sm" onclick="pasteJoin()"><svg class="lx-icon lx-icon--sm" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v3"/></svg> چسباندن</button></div>
       </div>
     </div>
   </div>
 
   <!-- CHAT -->
   <div id="chatView">
+    <div class="tg-header">
+      <div class="tg-avatar" id="peerAvatar">؟</div>
+      <div class="tg-peer">
+        <b id="peerName">در انتظار اتصال...</b>
+        <span id="peerSub">کد چت: <span id="myIdInline" style="color:var(--text)">—</span></span>
+      </div>
+      <div class="tg-actions">
+        <button class="icon-btn" title="کپی لینک" onclick="copyLink()">
+          <svg class="lx-icon" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5 0l3-3a5 5 0 0 0-7.07-7.07L13 3"/><path d="M14 11a5 5 0 0 0-7.5 0l-3 3a5 5 0 0 0 7.07 7.07L11 21"/></svg>
+        </button>
+        <button class="icon-btn" title="QR" onclick="showQR()">
+          <svg class="lx-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h7v7h-7z"/><path d="M14 17h3v3"/><path d="M17 14v3"/></svg>
+        </button>
+        <button class="icon-btn" title="خروج" onclick="leaveChat()">
+          <svg class="lx-icon" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+        </button>
+      </div>
+    </div>
+
     <div class="info-bar">
-      <span style="font-size:12px;color:var(--muted)">کد چت:</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted)">کد چت</span>
       <span class="id" id="myId">—</span>
-      <button class="btn btn-sm" onclick="copyId()">📋 کپی کد</button>
-      <button class="btn btn-sm" onclick="copyLink()">🔗 کپی لینک</button>
-      <button class="btn btn-sm" onclick="showQR()">▦ QR</button>
+      <button class="btn btn-sm" onclick="copyId()"><svg class="lx-icon lx-icon--sm" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v3"/></svg> کپی کد</button>
+      <button class="btn btn-sm" onclick="copyLink()"><svg class="lx-icon lx-icon--sm" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5 0l3-3a5 5 0 0 0-7.07-7.07L13 3"/><path d="M14 11a5 5 0 0 0-7.5 0l-3 3a5 5 0 0 0 7.07 7.07L11 21"/></svg> کپی لینک</button>
+      <button class="btn btn-sm" onclick="showQR()"><svg class="lx-icon lx-icon--sm" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h7v7h-7z"/></svg> QR</button>
       <span id="peerNameBadge" class="badge" style="margin-right:auto">در انتظار اتصال...</span>
-      <button class="btn btn-sm" onclick="leaveChat()">خروج</button>
     </div>
 
     <div class="messages" id="messages">
-      <div style="text-align:center;color:var(--muted);font-size:12px;padding:20px">پیامی هنوز نیست — لینک رو برای دوستت بفرست تا وصل بشه.</div>
+      <div style="text-align:center;color:var(--text-muted);font-size:12px;padding:20px">پیامی هنوز نیست — لینک را برای دوستت بفرست تا وصل شود.</div>
     </div>
 
     <div class="composer">
       <div class="composer-row">
-        <input type="text" id="msgInput" placeholder="پیام بنویس... (Enter برای ارسال)" onkeydown="if(event.key==='Enter') sendText()">
-        <button class="btn btn-primary" onclick="sendText()">ارسال</button>
+        <button class="icon-btn" title="ارسال فایل" onclick="document.getElementById('fileInput').click()">
+          <svg class="lx-icon" viewBox="0 0 24 24"><path d="M21.44 11.05 12.25 20.24a5.5 5.5 0 0 1-7.78-7.78l9.19-9.19a3.5 3.5 0 0 1 4.95 4.95l-9.2 9.19a1.5 1.5 0 0 1-2.12-2.12l8.6-8.6"/></svg>
+        </button>
+        <input type="text" id="msgInput" placeholder="پیام بنویس..." onkeydown="if(event.key==='Enter') sendText()">
+        <button class="btn btn-primary" onclick="sendText()" style="padding:10px 16px"><svg class="lx-icon" viewBox="0 0 24 24" style="color:#fff"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg> ارسال</button>
       </div>
-      <div class="composer-row">
-        <input type="file" id="fileInput" class="file-input" style="flex:1" accept="*/*">
-        <button class="btn" onclick="sendFile()">📎 ارسال فایل</button>
-        <button class="btn" onclick="clearChat()">🗑 پاک کردن</button>
+      <div class="composer-row" style="justify-content:space-between">
+        <input type="file" id="fileInput" class="file-input" style="display:none" accept="*/*" onchange="onFilePicked()">
+        <span class="hint" id="fileHint" style="flex:1">همه فرمتها — md / html / عکس / zip — مستقیم P2P</span>
+        <button class="btn btn-sm" id="sendFileBtn" onclick="sendFile()" style="display:none">ارسال فایل</button>
+        <button class="btn btn-sm btn-ghost" onclick="clearChat()">پاک کردن</button>
       </div>
-      <div class="hint">همه فرمتها — عکس، ویدیو، pdf، zip، <b>md</b>، <b>html</b>، هر چی — مستقیم P2P بین دو مرورگر. فایلهای خیلی بزرگ (۵۰MB+) ممکنه کند باشه.</div>
     </div>
   </div>
-
-  <div class="footer">ساخته شده برای GitHub Pages — فقط index.html را در ریپو بذار و Pages را روشن کن. <span style="color:var(--muted)">PeerJS Cloud (رایگان) برای برقراری اتصال استفاده میشود؛ پیامها P2P و ذخیره نمیشوند.</span></div>
 </div>
 
 <!-- QR modal -->
 <div class="qr-overlay" id="qrOverlay" onclick="if(event.target===this) closeQR()">
   <div class="qr-box">
-    <h3>▦ اسکن برای پیوستن</h3>
+    <h3>اسکن برای پیوستن</h3>
     <p>دوربین گوشی دوستت را روی این QR بگیر — مستقیم وارد چت میشود.</p>
     <div class="qr-img-wrap"><img id="qrImg" alt="QR"></div>
     <div class="qr-link" id="qrLink">—</div>
     <div class="row" style="justify-content:center">
-      <button class="btn btn-sm" onclick="copyLink()">🔗 کپی لینک</button>
+      <button class="btn btn-sm" onclick="copyLink()"><svg class="lx-icon lx-icon--sm" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v3"/></svg> کپی لینک</button>
       <button class="btn btn-primary btn-sm" onclick="closeQR()">بستن</button>
     </div>
   </div>
@@ -161,9 +269,62 @@ input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(88,166,255,.15)}
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <script>
 let peer=null, conn=null, myName='', myId='', isHost=false;
+let avatarColor='#DC2626', avatarImg=null;
+const COLORS=['#DC2626','#F59E0B','#22C55E','#06B6D4','#6366F1','#EC4899'];
 const $ = s => document.getElementById(s);
 function setStatus(t,on){ $('statusText').textContent=t; document.getElementById('status').classList.toggle('on', !!on); }
 function genId(){ return Math.random().toString(36).slice(2,7)+'-'+Math.random().toString(36).slice(2,7); }
+function initials(name){ const p=name.trim().split(/\s+/).filter(Boolean); if(!p.length) return '؟'; if(p.length===1) return p[0].slice(0,2).toUpperCase(); return (p[0][0]+p[p.length-1][0]).toUpperCase(); }
+
+(function initAvatar(){
+  const saved = JSON.parse(localStorage.getItem('rok_avatar')||'null');
+  if(saved){ avatarColor=saved.color||avatarColor; avatarImg=saved.img||null; }
+  const pal=$('palette');
+  COLORS.forEach(c=>{
+    const b=document.createElement('button');
+    b.className='swatch'+(c===avatarColor?' active':'');
+    b.style.background=c; b.style.color=c;
+    b.onclick=()=>{ avatarColor=c; avatarImg=null; localStorage.setItem('rok_avatar', JSON.stringify({color:avatarColor,img:null})); renderAvatar(); document.querySelectorAll('.swatch').forEach(x=>x.classList.toggle('active', x.style.background===c)); };
+    pal.appendChild(b);
+  });
+  const savedName=localStorage.getItem('rok_name')||'';
+  if(savedName) {$('nameInput').value=savedName; renderAvatar();}
+  else renderAvatar();
+})();
+
+function onNameInput(){ renderAvatar(); }
+function renderAvatar(){
+  const name=$('nameInput').value.trim() || localStorage.getItem('rok_name') || '';
+  const pv=$('avatarPreview');
+  if(avatarImg){
+    pv.style.background='transparent';
+    pv.innerHTML='<img src="'+avatarImg+'" alt="">';
+  } else {
+    pv.style.background=avatarColor;
+    pv.innerHTML='<span class="avatar-initials">'+initials(name||'؟')+'</span>';
+  }
+  document.querySelectorAll('.swatch').forEach(s=> s.classList.toggle('active', s.style.background===avatarColor && !avatarImg));
+}
+function onAvatarFile(inp){
+  const f=inp.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{ avatarImg=r.result; localStorage.setItem('rok_avatar', JSON.stringify({color:avatarColor,img:avatarImg})); renderAvatar(); };
+  r.readAsDataURL(f);
+}
+function getAvatarPayload(){
+  const name=$('nameInput').value.trim() || localStorage.getItem('rok_name') || '؟';
+  return {color:avatarColor, img:avatarImg, initials: initials(name)};
+}
+function setPeerAvatar(av){
+  const el=$('peerAvatar');
+  if(!el) return;
+  if(av && av.img){ el.style.background='transparent'; el.innerHTML='<img src="'+av.img+'" alt="">'; }
+  else if(av){ el.style.background=av.color||'#242428'; el.textContent=av.initials||'؟'; }
+}
+function onFilePicked(){
+  const f=$('fileInput').files[0];
+  if(f){ $('fileHint').textContent='آماده: '+f.name+' ('+formatSize(f.size)+')'; $('sendFileBtn').style.display='inline-flex'; }
+}
 
 // parse ?join=ID
 (function(){
@@ -176,10 +337,9 @@ function ensureName(){
   const n = $('nameInput').value.trim() || localStorage.getItem('rok_name') || '';
   if(!n){ alert('اول اسمت رو وارد کن 🙂'); $('nameInput').focus(); return null; }
   localStorage.setItem('rok_name', n);
+  localStorage.setItem('rok_avatar', JSON.stringify({color:avatarColor, img:avatarImg}));
   return n;
 }
-$('nameInput').value = localStorage.getItem('rok_name')||'';
-$('nameInput').addEventListener('keydown', e=>{ if(e.key==='Enter') createChat(); });
 
 function createChat(){
   const n = ensureName(); if(!n) return;
@@ -191,11 +351,7 @@ function joinChat(){
   const n = ensureName(); if(!n) return;
   let raw = $('joinInput').value.trim();
   if(!raw){ alert('کد یا لینک رو وارد کن'); return; }
-  // extract ?join=xxx or last part
-  try{
-    const uu=new URL(raw);
-    raw = uu.searchParams.get('join') || uu.hash.slice(1) || raw;
-  }catch(e){}
+  try{ const uu=new URL(raw); raw = uu.searchParams.get('join') || uu.hash.slice(1) || raw; }catch(e){}
   raw = raw.replace(/^#/, '').trim();
   if(!raw){ alert('کد نامعتبره'); return; }
   myName=n; isHost=false;
@@ -210,7 +366,7 @@ function startPeer(id, joinTo){
   setStatus('در حال اتصال...', false);
   peer = new Peer(id, { debug:0 });
   peer.on('open', _id=>{
-    myId=_id; $('myId').textContent=myId;
+    myId=_id; $('myId').textContent=myId; const inl=$('myIdInline'); if(inl) inl.textContent=myId;
     $('setupView').style.display='none';
     $('chatView').style.display='flex';
     setStatus(joinTo ? 'وصل شدن به دوست...' : 'آماده — لینک را بفرست', true);
@@ -230,24 +386,26 @@ function setupConn(c){
   conn=c;
   conn.on('open', ()=>{
     setStatus('متصل ✓', true);
-    $('peerNameBadge').textContent='متصل به '+ (c.peer||'دوست');
-    // handshake name
-    conn.send({type:'hello', name:myName});
+    const badge=$('peerNameBadge'); if(badge) badge.textContent='متصل به '+ (c.peer||'دوست');
+    const pn=$('peerName'); if(pn) pn.textContent=c.peer||'دوست';
+    conn.send({type:'hello', name:myName, avatar:getAvatarPayload()});
     addSys('✅ متصل شدید — حالا میتونید چت کنید');
   });
   conn.on('data', onData);
-  conn.on('close', ()=>{ setStatus('ارتباط قطع شد', false); addSys('ارتباط قطع شد'); $('peerNameBadge').textContent='قطع شد'; });
+  conn.on('close', ()=>{ setStatus('ارتباط قطع شد', false); addSys('ارتباط قطع شد'); const b=$('peerNameBadge'); if(b) b.textContent='قطع شد'; });
   conn.on('error', e=>{ addSys('خطا: '+e.message); });
 }
 
 function onData(d){
   if(!d || !d.type) return;
   if(d.type==='hello'){
-    $('peerNameBadge').textContent = d.name ? 'طرف مقابل: '+d.name : 'متصل';
-    // reply hello if host
-    if(isHost) conn.send({type:'hello', name:myName});
+    const badge=$('peerNameBadge'); if(badge) badge.textContent = d.name ? 'طرف مقابل: '+d.name : 'متصل';
+    const pn=$('peerName'); if(pn) pn.textContent=d.name||'دوست';
+    const ps=$('peerSub'); if(ps) ps.innerHTML='متصل ✓';
+    if(d.avatar) setPeerAvatar(d.avatar);
+    if(isHost) conn.send({type:'hello', name:myName, avatar:getAvatarPayload()});
   } else if(d.type==='text'){
-    addMsg(d.text, false, d.name, d.time);
+    addMsg(d.text, false, d.name, d.time, d.avatar);
   } else if(d.type==='file'){
     addFileMsg(d, false);
   }
@@ -257,9 +415,9 @@ function sendText(){
   const t=$('msgInput').value.trim();
   if(!t) return;
   if(!conn || conn.open===false){ alert('هنوز وصل نیستی'); return; }
-  const payload={type:'text', text:t, name:myName, time: Date.now()};
+  const payload={type:'text', text:t, name:myName, time: Date.now(), avatar:getAvatarPayload()};
   conn.send(payload);
-  addMsg(t, true, myName, payload.time);
+  addMsg(t, true, myName, payload.time, payload.avatar);
   $('msgInput').value='';
 }
 function sendFile(){
@@ -269,22 +427,23 @@ function sendFile(){
   if(f.size > 80*1024*1024){ if(!confirm('فایل بالای 80MB ممکنه کند/ناموفق باشه — ادامه بدم؟')) return; }
   const reader=new FileReader();
   reader.onload = ()=>{
-    const payload={type:'file', name:f.name, size:f.size, mime:f.type||'application/octet-stream', data: reader.result, sender:myName, time:Date.now()};
-    try{ conn.send(payload); addFileMsg(payload, true); $('fileInput').value=''; }
+    const payload={type:'file', name:f.name, size:f.size, mime:f.type||'application/octet-stream', data: reader.result, sender:myName, time:Date.now(), avatar:getAvatarPayload()};
+    try{ conn.send(payload); addFileMsg(payload, true); $('fileInput').value=''; $('fileHint').textContent='همه فرمتها — md / html / عکس / zip — مستقیم P2P'; $('sendFileBtn').style.display='none'; }
     catch(e){ alert('ارسال ناموفق: '+e.message); }
   };
   reader.readAsArrayBuffer(f);
 }
 
-function addMsg(text, me, name, time){
+function addMsg(text, me, name, time, avatar){
   const box=$('messages');
   if(box.children.length===1 && box.children[0].textContent.includes('پیامی هنوز نیست')) box.innerHTML='';
   const div=document.createElement('div');
   div.className='msg '+(me?'me':'peer');
   const when = time ? new Date(time).toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'}) : '';
-  div.innerHTML = '<div class="meta"><b>'+esc(name||(me?'تو':'دوست'))+'</b><span>'+when+'</span></div>'
+  div.innerHTML = '<div class="meta"><b>'+esc(name||(me?'تو':'دوست'))+'</b></div>'
     + '<div class="txt">'+esc(text)+'</div>'
-    + '<div class="actions"><button onclick="copyText(this)">📋 کپی متن</button>'+(me?'':'')+'</div>';
+    + '<span class="time">'+when+'</span>'
+    + '<div class="actions"><button onclick="copyText(this)"><svg class="lx-icon lx-icon--sm" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v3"/></svg> کپی</button></div>';
   box.appendChild(div); box.scrollTop=box.scrollHeight;
 }
 function addFileMsg(d, me){
@@ -296,51 +455,44 @@ function addFileMsg(d, me){
   let url='', sizeStr=formatSize(d.size);
   const lower=(d.name||'').toLowerCase();
   const isTextPreview = lower.endsWith('.md') || lower.endsWith('.markdown') || lower.endsWith('.txt') || lower.endsWith('.html') || lower.endsWith('.htm') || lower.endsWith('.css') || lower.endsWith('.js') || lower.endsWith('.json') || lower.endsWith('.csv') || lower.endsWith('.svg');
-  // always build blob url so هر فرمتی دانلود بشه
   if(d.data){
     const blob=new Blob([d.data], {type:d.mime||'application/octet-stream'});
     url=URL.createObjectURL(blob);
-    // برای md/html/txt یک پیشنمایش متنی کوچک بساز
     if(isTextPreview){
-      try{
-        const text=new TextDecoder().decode(d.data.slice(0, 4000));
-        d._previewText=text;
-      }catch(e){}
+      try{ const text=new TextDecoder().decode(d.data.slice(0, 4000)); d._previewText=text; }catch(e){}
     }
   }
   let previewHtml='';
   if(d._previewText){
     const short = d._previewText.length>1200 ? d._previewText.slice(0,1200)+'…' : d._previewText;
-    const lang = lower.endsWith('.md')?'md': lower.endsWith('.html')||lower.endsWith('.htm')?'html':'text';
-    previewHtml = '<div style="margin-top:8px;max-height:160px;overflow:auto;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:8px;font-family:JetBrains Mono,monospace;font-size:11px;white-space:pre-wrap;direction:ltr;text-align:left;word-break:break-word">'+esc(short)+'</div>'
-      + '<div style="margin-top:6px;display:flex;gap:6px"><button onclick="copyPreview(this)">📋 کپی متن فایل</button>'+(lang==='html'?'<button onclick="previewHtmlFile(this)">👁 پیشنمایش HTML</button>':'')+'</div>';
-    // store full
+    const isHtml = lower.endsWith('.html')||lower.endsWith('.htm');
+    previewHtml = '<div style="margin-top:8px;max-height:160px;overflow:auto;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:8px;font-family:JetBrains Mono,monospace;font-size:11px;white-space:pre-wrap;direction:ltr;text-align:left;word-break:break-word">'+esc(short)+'</div>'
+      + '<div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap"><button onclick="copyPreview(this)">کپی متن فایل</button>'+(isHtml?'<button onclick="previewHtmlFile(this)">پیشنمایش HTML</button>':'')+'</div>';
     div.dataset.fullText = d._previewText;
-    if(d.data) div.dataset.blobUrl = url;
+    div.dataset.blobUrl = url;
     div.dataset.fileName = d.name;
   }
   const mimeLabel = esc(d.mime|| (isTextPreview ? 'text/'+(lower.endsWith('.md')?'markdown':'plain') : 'application/octet-stream'));
-  div.innerHTML = '<div class="meta"><b>'+esc(d.sender|| (me?myName:'دوست'))+'</b><span>'+when+'</span><span>'+sizeStr+'</span></div>'
-    + '<div>📎 '+esc(d.name)+'</div>'
-    + '<div class="file-card">'+(url?'<a href="'+url+'" download="'+escAttr(d.name)+'">⬇ دانلود فایل</a>':'<span style="color:var(--muted)">در حال آمادهسازی...</span>')+' <span style="font-size:11px;color:var(--muted)">'+mimeLabel+'</span></div>'
-    + previewHtml;
+  div.innerHTML = '<div class="meta"><b>'+esc(d.sender|| (me?myName:'دوست'))+'</b><span>'+sizeStr+'</span></div>'
+    + '<div style="display:flex;align-items:center;gap:6px"><svg class="lx-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg> '+esc(d.name)+'</div>'
+    + '<div class="file-card">'+(url?'<a href="'+url+'" download="'+escAttr(d.name)+'">دانلود فایل</a>':'<span style="color:var(--text-muted)">در حال آمادهسازی...</span>')+' <span style="font-size:11px;color:var(--text-muted)">'+mimeLabel+'</span></div>'
+    + previewHtml
+    + '<span class="time">'+when+'</span>';
   box.appendChild(div); box.scrollTop=box.scrollHeight;
 }
 function addSys(t){
   const box=$('messages');
   if(box.children.length===1 && box.children[0].textContent.includes('پیامی هنوز نیست')) box.innerHTML='';
   const d=document.createElement('div');
-  d.style.cssText='text-align:center;font-size:11px;color:var(--muted);padding:6px;background:var(--card2);border:1px solid var(--border);border-radius:99px;align-self:center';
+  d.style.cssText='text-align:center;font-family:JetBrains Mono,monospace;font-size:11px;color:var(--text-muted);padding:7px 12px;background:var(--surface-2);border:1px solid var(--border);border-radius:100px;align-self:center';
   d.textContent=t; box.appendChild(d); box.scrollTop=box.scrollHeight;
 }
 function copyText(btn){
   const txt=btn.closest('.msg').querySelector('.txt').innerText;
-  navigator.clipboard.writeText(txt).then(()=>{ const o=btn.textContent; btn.textContent='✓ کپی شد'; setTimeout(()=>btn.textContent=o,1200); });
+  navigator.clipboard.writeText(txt).then(()=>{ const o=btn.innerHTML; btn.textContent='✓ کپی شد'; setTimeout(()=>btn.innerHTML=o,1200); });
 }
 function copyPreview(btn){
   const full=btn.closest('.msg').dataset.fullText||'';
-  // try to get full file if we have blob
-  const msgDiv=btn.closest('.msg');
   navigator.clipboard.writeText(full).then(()=>{ const o=btn.textContent; btn.textContent='✓ کپی شد'; setTimeout(()=>btn.textContent=o,1200); });
 }
 function previewHtmlFile(btn){
@@ -357,12 +509,11 @@ function getLink(){ return location.origin+location.pathname+'?join='+encodeURIC
 function showQR(){
   const link=getLink();
   $('qrLink').textContent=link;
-  // qr-server free API — no key, works on GitHub Pages
   $('qrImg').src='https://api.qrserver.com/v1/create-qr-code/?size=300x300&data='+encodeURIComponent(link);
   $('qrOverlay').classList.add('open');
 }
 function closeQR(){ $('qrOverlay').classList.remove('open'); }
-function clearChat(){ if(confirm('همه پیامها پاک بشن؟')) $('messages').innerHTML='<div style="text-align:center;color:var(--muted);font-size:12px;padding:20px">پاک شد.</div>'; }
+function clearChat(){ if(confirm('همه پیامها پاک بشن؟')) $('messages').innerHTML='<div style="text-align:center;color:var(--text-muted);font-size:12px;padding:20px">پاک شد.</div>'; }
 function leaveChat(){ if(confirm('خارج بشی؟')) location.href=location.pathname; }
 function esc(s){ return String(s).replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])); }
 function escAttr(s){ return esc(s).replace(/"/g,'&quot;'); }
