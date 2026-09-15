@@ -83,6 +83,8 @@ input[type=text]::placeholder{color:var(--text-muted)}
 .setup-grid{display:flex;flex-direction:column;gap:12px}
 body.invite-mode /* chat — telegram style */
 #chatView{display:none;flex-direction:column;gap:10px;flex:1;min-height:0}
+body.in-chat #chatView{display:flex !important}
+body.in-chat #setupView{display:none !important}
 .tg-header{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:10px}
 .tg-avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0;overflow:hidden;border:1px solid var(--border)}
 .tg-avatar img{width:100%;height:100%;object-fit:cover}
@@ -494,6 +496,7 @@ function startPeer(id, joinTo){
     myId=_id; $('myId').textContent=myId; const inl=$('myIdInline'); if(inl) inl.textContent=myId;
     $('setupView').style.display='none';
     $('chatView').style.display='flex';
+    document.body.classList.add('in-chat');
     setStatus(joinTo ? t('status_joining') : t('status_ready_link'), true);
     if(joinTo) connectTo(joinTo);
   });
@@ -639,7 +642,7 @@ function showQR(){
 }
 function closeQR(){ $('qrOverlay').classList.remove('open'); }
 function clearChat(){ if(confirm('همه پیامها پاک بشن؟')) $('messages').innerHTML='<div style="text-align:center;color:var(--text-muted);font-size:12px;padding:20px">پاک شد.</div>'; }
-function leaveChat(){ if(confirm('خارج بشی؟')) location.href=location.pathname; }
+function leaveChat(){ if(confirm('خارج بشی؟')){ document.body.classList.remove('in-chat'); location.href=location.pathname; } }
 function esc(s){ return String(s).replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])); }
 function escAttr(s){ return esc(s).replace(/"/g,'&quot;'); }
 function formatSize(b){ if(b<1024) return b+' B'; if(b<1024*1024) return (b/1024).toFixed(1)+' KB'; return (b/1024/1024).toFixed(1)+' MB'; }
