@@ -123,6 +123,14 @@ input[type=text]::placeholder{color:var(--text-muted)}
 .qr-img-wrap{background:#fff;border-radius:16px;padding:14px;display:inline-block;margin-bottom:12px}
 .qr-img-wrap img{display:block;width:220px;height:220px}
 .qr-link{font-family:'JetBrains Mono',monospace;font-size:11px;word-break:break-all;background:var(--bg);border:1px solid var(--border);padding:8px 10px;border-radius:10px;direction:ltr;color:var(--text-muted);margin-bottom:12px}
+body.invite-mode .hero{display:none}
+body.invite-mode .setup-grid{grid-template-columns:1fr;max-width:520px;margin:0 auto}
+body.invite-mode .setup-grid .card:first-child{display:none}
+body.invite-mode #joinRow{border-color:rgba(220,38,38,.35);box-shadow:0 0 0 3px rgba(220,38,38,.12)}
+body.invite-mode #joinRow h2{font-size:16px}
+.invite-badge{display:none;font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 12px;border-radius:100px;background:var(--red);color:#fff;border:1px solid var(--red);margin-bottom:10px}
+body.invite-mode .invite-badge{display:inline-flex;align-items:center;gap:6px}
+
 </style>
 </head>
 <body>
@@ -330,7 +338,21 @@ function onFilePicked(){
 (function(){
   const u = new URL(location.href);
   const j = u.searchParams.get('join');
-  if(j) $('joinInput').value=j;
+  if(j){
+    $('joinInput').value=j; $('joinInput').readOnly=true; $('joinInput').style.opacity='.7';
+    document.body.classList.add('invite-mode');
+    // rewrite join card copy
+    const jr=document.getElementById('joinRow');
+    if(jr){
+      const h2=jr.querySelector('h2');
+      if(h2) h2.textContent='به چت دعوت شدی — فقط اسمت را بزن';
+      const pp=jr.querySelector('p');
+      if(pp) pp.textContent='لینک یا QR را باز کردی — فقط یک نام وارد کن و ورود را بزن، مستقیم وارد چت میشوی.';
+      const btn=jr.querySelector('button[onclick="joinChat()"]');
+      if(btn){ btn.innerHTML='<svg class="lx-icon" viewBox="0 0 24 24" style="color:#fff"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> ورود به چت'; btn.style.padding='12px 22px'; btn.style.fontSize='14px'; }
+    }
+    setTimeout(()=>{ const ni=$('nameInput'); if(ni){ ni.focus(); ni.scrollIntoView({behavior:'smooth', block:'center'});} }, 300);
+  }
 })();
 
 function ensureName(){
