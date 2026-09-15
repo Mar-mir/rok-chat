@@ -57,6 +57,15 @@ input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(88,166,255,.15)}
 .footer{text-align:center;font-size:11px;color:#656c76;padding:14px;border-top:1px solid var(--border);margin-top:8px}
 #setupView{display:flex;flex-direction:column;gap:16px}
 .badge{font-size:11px;padding:4px 8px;border-radius:99px;border:1px solid var(--border);background:var(--card2);color:var(--muted)}
+/* qr modal */
+.qr-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.qr-overlay.open{display:flex}
+.qr-box{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px;max-width:360px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.qr-box h3{font-size:15px;margin-bottom:6px}
+.qr-box p{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:12px}
+.qr-img-wrap{background:#fff;border-radius:16px;padding:14px;display:inline-block;margin-bottom:12px}
+.qr-img-wrap img{display:block;width:220px;height:220px}
+.qr-link{font-family:'JetBrains Mono',monospace;font-size:11px;word-break:break-all;background:var(--bg);border:1px solid var(--border);padding:8px 10px;border-radius:10px;direction:ltr;color:var(--muted);margin-bottom:12px}
 </style>
 </head>
 <body>
@@ -109,6 +118,7 @@ input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(88,166,255,.15)}
       <span class="id" id="myId">—</span>
       <button class="btn btn-sm" onclick="copyId()">📋 کپی کد</button>
       <button class="btn btn-sm" onclick="copyLink()">🔗 کپی لینک</button>
+      <button class="btn btn-sm" onclick="showQR()">▦ QR</button>
       <span id="peerNameBadge" class="badge" style="margin-right:auto">در انتظار اتصال...</span>
       <button class="btn btn-sm" onclick="leaveChat()">خروج</button>
     </div>
@@ -132,6 +142,20 @@ input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(88,166,255,.15)}
   </div>
 
   <div class="footer">ساخته شده برای GitHub Pages — فقط index.html را در ریپو بذار و Pages را روشن کن. <span style="color:var(--muted)">PeerJS Cloud (رایگان) برای برقراری اتصال استفاده میشود؛ پیامها P2P و ذخیره نمیشوند.</span></div>
+</div>
+
+<!-- QR modal -->
+<div class="qr-overlay" id="qrOverlay" onclick="if(event.target===this) closeQR()">
+  <div class="qr-box">
+    <h3>▦ اسکن برای پیوستن</h3>
+    <p>دوربین گوشی دوستت را روی این QR بگیر — مستقیم وارد چت میشود.</p>
+    <div class="qr-img-wrap"><img id="qrImg" alt="QR"></div>
+    <div class="qr-link" id="qrLink">—</div>
+    <div class="row" style="justify-content:center">
+      <button class="btn btn-sm" onclick="copyLink()">🔗 کپی لینک</button>
+      <button class="btn btn-primary btn-sm" onclick="closeQR()">بستن</button>
+    </div>
+  </div>
 </div>
 
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
@@ -299,7 +323,17 @@ function copyId(){ navigator.clipboard.writeText($('myId').textContent).then(()=
 function copyLink(){
   const link = location.origin+location.pathname+'?join='+encodeURIComponent($('myId').textContent);
   navigator.clipboard.writeText(link).then(()=>alert('لینک کپی شد:\n'+link));
+  return link;
 }
+function getLink(){ return location.origin+location.pathname+'?join='+encodeURIComponent($('myId').textContent); }
+function showQR(){
+  const link=getLink();
+  $('qrLink').textContent=link;
+  // qr-server free API — no key, works on GitHub Pages
+  $('qrImg').src='https://api.qrserver.com/v1/create-qr-code/?size=300x300&data='+encodeURIComponent(link);
+  $('qrOverlay').classList.add('open');
+}
+function closeQR(){ $('qrOverlay').classList.remove('open'); }
 function clearChat(){ if(confirm('همه پیامها پاک بشن؟')) $('messages').innerHTML='<div style="text-align:center;color:var(--muted);font-size:12px;padding:20px">پاک شد.</div>'; }
 function leaveChat(){ if(confirm('خارج بشی؟')) location.href=location.pathname; }
 function esc(s){ return String(s).replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])); }
