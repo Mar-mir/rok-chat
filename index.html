@@ -75,8 +75,12 @@ input[type=text]::placeholder{color:var(--text-muted)}
 .swatch.active{border-color:#fff;box-shadow:0 0 0 2px var(--bg), 0 0 0 4px currentColor}
 .upload-btn{font-size:11px;padding:6px 10px;border-radius:var(--radius-pill);border:1px dashed var(--border-light);background:transparent;color:var(--text-secondary);cursor:pointer;font-family:'JetBrains Mono',monospace}
 .upload-btn:hover{border-color:var(--text-muted);color:var(--text)}
-.setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:680px){.setup-grid{grid-template-columns:1fr}}
+.setup-two-col{display:grid;grid-template-columns:1.15fr .95fr;gap:14px;align-items:start}
+.setup-grid{display:flex;flex-direction:column;gap:14px}
+.demo{position:sticky;top:72px}
+@media(max-width:860px){.setup-two-col{grid-template-columns:1fr}.demo{position:static}}
+body.invite-mode .setup-two-col{grid-template-columns:1fr;max-width:520px;margin:0 auto}
+body.invite-mode .demo{display:none}
 /* chat — telegram style */
 #chatView{display:none;flex-direction:column;gap:10px;flex:1;min-height:0}
 .tg-header{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:10px}
@@ -217,7 +221,8 @@ body.invite-mode .invite-badge{display:inline-flex;align-items:center;gap:6px}
       <input id="nameInput" type="text" placeholder="مثلاً رشاد" data-i18n-placeholder="ph_name" maxlength="24" oninput="onNameInput()">
     </div>
 
-    <div class="setup-grid">
+    <div class="setup-two-col">
+      <div class="setup-grid">
       <div class="card" style="border-color:rgba(220,38,38,.25);background:linear-gradient(180deg,var(--surface) 0%, rgba(220,38,38,.06) 100%)">
         <div class="card-head">
           <div class="iconbox" style="background:var(--red);border-color:var(--red);color:#fff"><svg class="lx-icon" viewBox="0 0 24 24" style="color:#fff"><path d="M12 5v14"/><path d="M5 12h14"/></svg></div>
@@ -242,8 +247,8 @@ body.invite-mode .invite-badge{display:inline-flex;align-items:center;gap:6px}
       </div>
     </div>
 
-    <!-- Animated preview: how to create -->
-    <div class="demo" id="demo">
+      <!-- Animated preview: how to create -->
+      <div class="demo" id="demo">
       <div class="demo-head">
         <b data-i18n="demo_title">نحوهٔ ساخت — پیشنمایش</b>
         <span id="demoLabel">۱ / ۴</span>
