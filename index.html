@@ -133,11 +133,11 @@ input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(88,166,255,.15)}
         <button class="btn btn-primary" onclick="sendText()">ارسال</button>
       </div>
       <div class="composer-row">
-        <input type="file" id="fileInput" class="file-input" style="flex:1">
+        <input type="file" id="fileInput" class="file-input" style="flex:1" accept="*/*">
         <button class="btn" onclick="sendFile()">📎 ارسال فایل</button>
         <button class="btn" onclick="clearChat()">🗑 پاک کردن</button>
       </div>
-      <div class="hint">فایلها مستقیم بین دو مرورگر رد و بدل میشن — برای فایلهای خیلی بزرگ (بالای 50MB) ممکنه کمی طول بکشه.</div>
+      <div class="hint">همه فرمتها — عکس، ویدیو، pdf، zip، <b>md</b>، <b>html</b>، هر چی — مستقیم P2P بین دو مرورگر. فایلهای خیلی بزرگ (۵۰MB+) ممکنه کند باشه.</div>
     </div>
   </div>
 
@@ -293,19 +293,37 @@ function addFileMsg(d, me){
   const div=document.createElement('div');
   div.className='msg '+(me?'me':'peer');
   const when = d.time ? new Date(d.time).toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'}) : '';
-  // build blob url for receiver
   let url='', sizeStr=formatSize(d.size);
-  if(!me && d.data){
-    const blob=new Blob([d.data], {type:d.mime});
+  const lower=(d.name||'').toLowerCase();
+  const isTextPreview = lower.endsWith('.md') || lower.endsWith('.markdown') || lower.endsWith('.txt') || lower.endsWith('.html') || lower.endsWith('.htm') || lower.endsWith('.css') || lower.endsWith('.js') || lower.endsWith('.json') || lower.endsWith('.csv') || lower.endsWith('.svg');
+  // always build blob url so هر فرمتی دانلود بشه
+  if(d.data){
+    const blob=new Blob([d.data], {type:d.mime||'application/octet-stream'});
     url=URL.createObjectURL(blob);
-  } else if(me && d.data){
-    // for sender, create url too
-    const blob=new Blob([d.data], {type:d.mime});
-    url=URL.createObjectURL(blob);
+    // برای md/html/txt یک پیشنمایش متنی کوچک بساز
+    if(isTextPreview){
+      try{
+        const text=new TextDecoder().decode(d.data.slice(0, 4000));
+        d._previewText=text;
+      }catch(e){}
+    }
   }
+  let previewHtml='';
+  if(d._previewText){
+    const short = d._previewText.length>1200 ? d._previewText.slice(0,1200)+'…' : d._previewText;
+    const lang = lower.endsWith('.md')?'md': lower.endsWith('.html')||lower.endsWith('.htm')?'html':'text';
+    previewHtml = '<div style="margin-top:8px;max-height:160px;overflow:auto;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:8px;font-family:JetBrains Mono,monospace;font-size:11px;white-space:pre-wrap;direction:ltr;text-align:left;word-break:break-word">'+esc(short)+'</div>'
+      + '<div style="margin-top:6px;display:flex;gap:6px"><button onclick="copyPreview(this)">📋 کپی متن فایل</button>'+(lang==='html'?'<button onclick="previewHtmlFile(this)">👁 پیشنمایش HTML</button>':'')+'</div>';
+    // store full
+    div.dataset.fullText = d._previewText;
+    if(d.data) div.dataset.blobUrl = url;
+    div.dataset.fileName = d.name;
+  }
+  const mimeLabel = esc(d.mime|| (isTextPreview ? 'text/'+(lower.endsWith('.md')?'markdown':'plain') : 'application/octet-stream'));
   div.innerHTML = '<div class="meta"><b>'+esc(d.sender|| (me?myName:'دوست'))+'</b><span>'+when+'</span><span>'+sizeStr+'</span></div>'
     + '<div>📎 '+esc(d.name)+'</div>'
-    + '<div class="file-card">'+(url?'<a href="'+url+'" download="'+escAttr(d.name)+'">⬇ دانلود / نمایش فایل</a>':'<span style="color:var(--muted)">در حال آمادهسازی...</span>')+' <span style="font-size:11px;color:var(--muted)">'+esc(d.mime)+'</span></div>';
+    + '<div class="file-card">'+(url?'<a href="'+url+'" download="'+escAttr(d.name)+'">⬇ دانلود فایل</a>':'<span style="color:var(--muted)">در حال آمادهسازی...</span>')+' <span style="font-size:11px;color:var(--muted)">'+mimeLabel+'</span></div>'
+    + previewHtml;
   box.appendChild(div); box.scrollTop=box.scrollHeight;
 }
 function addSys(t){
@@ -318,6 +336,16 @@ function addSys(t){
 function copyText(btn){
   const txt=btn.closest('.msg').querySelector('.txt').innerText;
   navigator.clipboard.writeText(txt).then(()=>{ const o=btn.textContent; btn.textContent='✓ کپی شد'; setTimeout(()=>btn.textContent=o,1200); });
+}
+function copyPreview(btn){
+  const full=btn.closest('.msg').dataset.fullText||'';
+  // try to get full file if we have blob
+  const msgDiv=btn.closest('.msg');
+  navigator.clipboard.writeText(full).then(()=>{ const o=btn.textContent; btn.textContent='✓ کپی شد'; setTimeout(()=>btn.textContent=o,1200); });
+}
+function previewHtmlFile(btn){
+  const url=btn.closest('.msg').dataset.blobUrl;
+  if(url) window.open(url, '_blank');
 }
 function copyId(){ navigator.clipboard.writeText($('myId').textContent).then(()=>alert('کد کپی شد')); }
 function copyLink(){
