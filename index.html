@@ -33,7 +33,6 @@ header{position:sticky;top:0;z-index:20;background:rgba(10,10,11,.88);backdrop-f
 .status.on{color:var(--green);border-color:rgba(34,197,94,.25);background:rgba(34,197,94,.08)}
 .status.on .dot{background:var(--green);box-shadow:0 0 8px rgba(34,197,94,.6)}
 /* layout */
-.wrap{max-width:1020px;width:100%;margin:0 auto;padding:18px 14px 14px;flex:1;display:flex;flex-direction:column;gap:14px}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px 16px}
 .card-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .card-head .iconbox{width:36px;height:36px;border-radius:10px;background:var(--surface-3);border:1px solid var(--border);display:grid;place-items:center;color:var(--text-secondary)}
@@ -75,19 +74,14 @@ input[type=text]::placeholder{color:var(--text-muted)}
 .swatch.active{border-color:#fff;box-shadow:0 0 0 2px var(--bg), 0 0 0 4px currentColor}
 .upload-btn{font-size:11px;padding:6px 10px;border-radius:var(--radius-pill);border:1px dashed var(--border-light);background:transparent;color:var(--text-secondary);cursor:pointer;font-family:'JetBrains Mono',monospace}
 .upload-btn:hover{border-color:var(--text-muted);color:var(--text)}
-.setup-two-col{display:grid;grid-template-columns:380px 1fr;gap:14px;align-items:start}
-.setup-grid{grid-column:2;display:flex;flex-direction:column;gap:12px}
-.demo{grid-column:1;position:sticky;top:68px;align-self:start}
 .hero{padding:14px 16px}
 .hero-title{font-size:24px}
 .hero-sub{font-size:12.5px}
 #setupView{gap:12px}
-.wrap{max-width:1020px;padding:14px 16px 10px}
-.demo-stage{padding:12px}
-@media(max-width:860px){.setup-two-col{grid-template-columns:1fr}.setup-grid{grid-column:auto}.demo{grid-column:auto;position:static}}
-body.invite-mode .setup-two-col{grid-template-columns:1fr;max-width:520px;margin:0 auto}
-body.invite-mode .demo{display:none}
-/* chat — telegram style */
+.wrap{max-width:720px;width:100%;margin:0 auto;padding:14px 16px 10px;flex:1;display:flex;flex-direction:column;gap:14px}
+.setup-two-col{max-width:620px;margin:0 auto}
+.setup-grid{display:flex;flex-direction:column;gap:12px}
+body.invite-mode /* chat — telegram style */
 #chatView{display:none;flex-direction:column;gap:10px;flex:1;min-height:0}
 .tg-header{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:10px}
 .tg-avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0;overflow:hidden;border:1px solid var(--border)}
@@ -133,35 +127,6 @@ body.invite-mode .demo{display:none}
 .qr-img-wrap{background:#fff;border-radius:16px;padding:14px;display:inline-block;margin-bottom:12px}
 .qr-img-wrap img{display:block;width:220px;height:220px}
 .qr-link{font-family:'JetBrains Mono',monospace;font-size:11px;word-break:break-all;background:var(--bg);border:1px solid var(--border);padding:8px 10px;border-radius:10px;direction:ltr;color:var(--text-muted);margin-bottom:12px}
-/* demo preview */
-.demo{border:1px solid var(--border);border-radius:16px;overflow:hidden;background:var(--surface);position:relative}
-.demo-head{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--border);background:var(--surface-2)}
-.demo-head b{font-size:12px;font-weight:700}
-.demo-head span{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted)}
-.demo-stage{padding:14px;display:flex;gap:12px;align-items:stretch}
-.demo-steps{flex:1;display:flex;flex-direction:column;gap:8px;min-width:0}
-.step{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;border:1px solid var(--border);background:var(--surface-2);transition:.25s;opacity:.55}
-.step.active{border-color:var(--red);background:rgba(220,38,38,.08);opacity:1;transform:translateX(-2px);box-shadow:0 4px 16px var(--red-glow)}
-.step .num{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;background:var(--surface-3);border:1px solid var(--border);color:var(--text-muted);flex-shrink:0;transition:.25s}
-.step.active .num{background:var(--red);border-color:var(--red);color:#fff}
-.step p{font-size:12.5px;line-height:1.6}
-.step p b{color:var(--text)}
-.step small{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted)}
-.demo-phone{width:210px;flex-shrink:0;background:var(--bg);border:1px solid var(--border);border-radius:18px;padding:10px;display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden}
-.demo-phone::before{content:'';position:absolute;inset:0;background:radial-gradient(300px 160px at 50% -10%, rgba(220,38,38,.18), transparent 60%);pointer-events:none}
-.phone-bar{height:8px;border-radius:99px;background:var(--surface-3);width:36%;align-self:center}
-.mini-input{height:30px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);display:flex;align-items:center;padding:0 10px;font-size:12px;color:var(--text-muted);transition:.25s}
-.mini-input.typing{border-color:var(--red);color:var(--text);box-shadow:0 0 0 3px var(--red-glow)}
-.mini-btn{height:28px;border-radius:99px;background:var(--red);color:#fff;display:grid;place-items:center;font-size:11px;font-weight:700;transition:.25s}
-.mini-btn.pulse{animation:pulse .9s ease}
-@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
-.mini-qr{height:78px;border-radius:12px;background:#fff;display:grid;place-items:center;position:relative;overflow:hidden;border:1px solid var(--border)}
-.mini-qr-grid{width:62px;height:62px;background: repeating-linear-gradient(0deg,#111 0 4px, transparent 4px 8px), repeating-linear-gradient(90deg,#111 0 4px, transparent 4px 8px);opacity:.9;border-radius:6px}
-.mini-qr span{position:absolute;bottom:4px;font-family:'JetBrains Mono',monospace;font-size:8px;color:#111;background:#fff;padding:1px 4px;border-radius:4px}
-.demo-ctrl{display:flex;gap:8px;padding:10px 14px;border-top:1px solid var(--border);background:var(--surface-2);align-items:center;justify-content:space-between}
-.progress{flex:1;height:6px;background:var(--surface-3);border-radius:99px;overflow:hidden;border:1px solid var(--border)}
-.progress i{display:block;height:100%;width:0%;background:var(--red);transition:width .35s}
-@media(max-width:680px){.demo-stage{flex-direction:column}.demo-phone{width:100%}}
 body.invite-mode .hero{display:none}
 body.invite-mode .setup-grid .card:first-child{display:none}
 body.invite-mode #joinRow{border-color:rgba(220,38,38,.35);box-shadow:0 0 0 3px rgba(220,38,38,.12)}
@@ -252,31 +217,6 @@ body.invite-mode .invite-badge{display:inline-flex;align-items:center;gap:6px}
       </div>
     </div>
 
-      <!-- Animated preview: how to create -->
-      <div class="demo" id="demo">
-      <div class="demo-head">
-        <b data-i18n="demo_title">نحوهٔ ساخت — پیشنمایش</b>
-        <span id="demoLabel">۱ / ۴</span>
-      </div>
-      <div class="demo-stage">
-        <div class="demo-steps">
-          <div class="step active" data-step="0"><div class="num">۱</div><p><b data-i18n="step1_t">نام و آواتار</b> <span data-i18n="step1_d">را انتخاب کن</span> <br><small data-i18n="step1_s">حروف اول خودکار + رنگ یا عکس</small></p></div>
-          <div class="step" data-step="1"><div class="num">۲</div><p><b data-i18n="step2_t">ساخت چت</b> <span data-i18n="step2_d">را بزن</span> <br><small data-i18n="step2_s">کد و لینک دعوت ساخته میشود</small></p></div>
-          <div class="step" data-step="2"><div class="num">۳</div><p><b data-i18n="step3_t">لینک یا QR</b> <span data-i18n="step3_d">را بفرست</span> <br><small data-i18n="step3_s">کپی لینک یا نمایش QR برای اسکن</small></p></div>
-          <div class="step" data-step="3"><div class="num">۴</div><p><b data-i18n="step4_t">دوستت وارد میشود</b> <span data-i18n="step4_d">و چت آغاز میشود</span> <br><small data-i18n="step4_s">فقط نام میزند و ورود — استایل تلگرام</small></p></div>
-        </div>
-        <div class="demo-phone">
-          <div class="phone-bar"></div>
-          <div class="mini-input" id="miniInput" data-i18n="mini_name">نام: رشاد</div>
-          <div class="mini-btn" id="miniBtn" data-i18n="create_btn">ساخت چت جدید</div>
-          <div class="mini-qr" id="miniQr"><div class="mini-qr-grid"></div><span>rok.chat/?join=..</span></div>
-        </div>
-      </div>
-      <div class="demo-ctrl">
-        <div class="progress"><i id="prog"></i></div>
-        <button class="btn btn-sm" onclick="toggleDemo()" data-i18n="demo_toggle">⏯ توقف/پخش</button>
-        <button class="btn btn-sm btn-ghost" onclick="restartDemo()" data-i18n="demo_restart">↺ از اول</button>
-      </div>
     </div>
   </div>
 
@@ -703,21 +643,6 @@ function leaveChat(){ if(confirm('خارج بشی؟')) location.href=location.pa
 function esc(s){ return String(s).replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])); }
 function escAttr(s){ return esc(s).replace(/"/g,'&quot;'); }
 function formatSize(b){ if(b<1024) return b+' B'; if(b<1024*1024) return (b/1024).toFixed(1)+' KB'; return (b/1024/1024).toFixed(1)+' MB'; }
-// demo autoplay
-let demoIdx=0, demoTimer=null, demoPlaying=true;
-function renderDemo(){
-  document.querySelectorAll('.step').forEach(s=> s.classList.toggle('active', parseInt(s.dataset.step)===demoIdx));
-  const label=document.getElementById('demoLabel'); if(label) label.textContent=(demoIdx+1)+' / 4';
-  const prog=document.getElementById('prog'); if(prog) prog.style.width=((demoIdx+1)/4*100)+'%';
-  const inp=document.getElementById('miniInput'), btn=document.getElementById('miniBtn'), qr=document.getElementById('miniQr');
-  if(inp) inp.classList.toggle('typing', demoIdx===0);
-  if(btn) btn.classList.toggle('pulse', demoIdx===1);
-  if(qr) qr.style.outline = demoIdx===2 ? '2px solid var(--red)' : 'none';
-}
-function nextDemo(){ demoIdx=(demoIdx+1)%4; renderDemo(); }
-function toggleDemo(){ demoPlaying=!demoPlaying; if(demoPlaying) demoTimer=setInterval(nextDemo, 1800); else clearInterval(demoTimer); }
-function restartDemo(){ demoIdx=0; renderDemo(); if(!demoPlaying){ demoPlaying=true; demoTimer=setInterval(nextDemo, 1800);} }
-(function(){ renderDemo(); demoTimer=setInterval(nextDemo, 1800); })();
 </script>
 </body>
 </html>
