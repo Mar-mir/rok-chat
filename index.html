@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>رُک چت — چت سادهٔ دو نفره</title>
+<title data-i18n="page_title">رُک چت — چت سادهٔ دو نفره</title>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -176,7 +176,7 @@ body.invite-mode .invite-badge{display:inline-flex;align-items:center;gap:6px}
       <svg class="lx-icon lx-icon--lg" viewBox="0 0 24 24" style="color:#fff"><path d="M21 11.5a8.5 8.5 0 0 1-12 7.7"/><path d="M21 11.5a8.5 8.5 0 0 0-7.5-7.5"/><path d="M4 11.5a8.5 8.5 0 0 0 12 7.7"/><path d="M3 11.5h18"/><path d="M12 3v16"/></svg>
     </div>
     <div>
-      <div class="brand-name">رُک <i>چت</i></div>
+      <div class="brand-name" data-i18n="brand">رُک <i>چت</i></div>
       <div class="brand-sub">rok chat · p2p</div>
     </div>
   </div>
@@ -230,7 +230,7 @@ body.invite-mode .invite-badge{display:inline-flex;align-items:center;gap:6px}
         </div>
         <p data-i18n="create_desc">یک کد و لینک دعوت میگیری — بفرست برای دوستت.</p>
         <button class="btn btn-primary" style="width:100%" onclick="createChat()"><svg class="lx-icon" viewBox="0 0 24 24" style="color:#fff"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 8v6"/><path d="M19 11h6"/></svg data-i18n="create_btn"> ساخت چت جدید</button>
-        <div class="hint" style="margin-top:8px">data-i18n="create_hint">بعد از ساخت، دکمهٔ <b style="color:var(--text)">QR</b> برای اسکن سریع فعال میشود.</div></div>
+        <div class="hint" style="margin-top:8px" data-i18n="create_hint">بعد از ساخت، دکمهٔ <b style="color:var(--text)">QR</b> برای اسکن سریع فعال میشود.</div></div>
       </div>
 
       <div class="card">
@@ -349,10 +349,11 @@ const COLORS=['#DC2626','#F59E0B','#22C55E','#06B6D4','#6366F1','#EC4899'];
 const $ = s => document.getElementById(s);
 function setStatus(t,on){ $('statusText').textContent=t; document.getElementById('status').classList.toggle('on', !!on); }
 function genId(){ return Math.random().toString(36).slice(2,7)+'-'+Math.random().toString(36).slice(2,7); }
-function initials(name){ const p=name.trim().split(/\s+/).filter(Boolean); if(!p.length) return '؟'; if(p.length===1) return p[0].slice(0,2).toUpperCase(); return (p[0][0]+p[p.length-1][0]).toUpperCase(); }
+function initials(name){ const p=name.trim().split(/\s+/).filter(Boolean); const q=currentLang==='en'?'?':'؟'; if(!p.length) return q; if(p.length===1) return p[0].slice(0,2).toUpperCase(); return (p[0][0]+p[p.length-1][0]).toUpperCase(); }
 
 const I18N = {
   fa: {
+    page_title:"رُک چت — چت سادهٔ دو نفره",brand:'رُک <i>چت</i>',
     status_ready:"آماده",status_connecting:"در حال اتصال...",status_joining:"وصل شدن به دوست...",status_ready_link:"آماده — لینک را بفرست",status_connected:"متصل ✓",status_disconnected:"ارتباط قطع شد",status_reconnect:"قطع شد — تلاش مجدد...",status_error:"خطا: ",
     hero_title:'چتِ <em>رُک</em> و ساده — دو نفره', hero_sub:"بدون ثبتنام، بدون سرور. فقط یک نام و یک آواتار — لینک را بفرست، دوستت با یک اسکن وصل میشود.",
     pill_p2p:"P2P رمزگذاری شده", pill_formats:"هر فرمتی — md / html", pill_telegram:"استایل تلگرام",
@@ -373,9 +374,11 @@ const I18N = {
     invite_badge:"دعوت به چت", invite_join_title:"به چت دعوت شدی — فقط اسمت را بزن", invite_join_desc:"لینک یا QR را باز کردی — فقط یک نام وارد کن و ورود را بزن، مستقیم وارد چت میشوی.", invite_enter:"ورود به چت",
     alert_name:"اول اسمت رو وارد کن 🙂", alert_code:"کد یا لینک رو وارد کن", alert_code_invalid:"کد نامعتبره", alert_not_connected:"هنوز وصل نیستی", alert_no_file:"اول یک فایل انتخاب کن", alert_large:"فایل بالای 80MB ممکنه کند/ناموفق باشه — ادامه بدم؟", alert_send_fail:"ارسال ناموفق: ",
     sys_connected:"✅ متصل شدید — حالا میتونید چت کنید", sys_disconnected:"ارتباط قطع شد", sys_error:"خطا: ",
-    peer_label:"طرف مقابل: ", peer_connected:"متصل ✓", peer_peer:"دوست"
+    peer_label:"طرف مقابل: ", peer_connected:"متصل ✓", peer_peer:"دوست",
+    btn_copy:"کپی", btn_copy_file:"کپی متن فایل", btn_preview_html:"پیشنمایش HTML", btn_download:"دانلود فایل", mime_fallback:"فایل"
   },
   en: {
+    page_title:"Rok Chat — Simple 1-to-1",brand:'Rok <i>Chat</i>',
     status_ready:"Ready",status_connecting:"Connecting...",status_joining:"Joining...",status_ready_link:"Ready — share the link",status_connected:"Connected ✓",status_disconnected:"Disconnected",status_reconnect:"Reconnecting...",status_error:"Error: ",
     hero_title:'Simple <em>Rok</em> Chat — 1-to-1', hero_sub:"No signup, no server. Just a name & avatar — share a link, your friend scans and joins.",
     pill_p2p:"P2P encrypted", pill_formats:"Any format — md / html", pill_telegram:"Telegram style",
@@ -396,7 +399,8 @@ const I18N = {
     invite_badge:"Invite", invite_join_title:"You're invited — just enter your name", invite_join_desc:"You opened an invite link/QR — just enter a name and hit Enter to join.", invite_enter:"Enter chat",
     alert_name:"Please enter your name 🙂", alert_code:"Please enter a code or link", alert_code_invalid:"Invalid code", alert_not_connected:"Not connected yet", alert_no_file:"Pick a file first", alert_large:"File over 80MB may be slow/fail — continue?", alert_send_fail:"Send failed: ",
     sys_connected:"✅ Connected — you can chat now", sys_disconnected:"Disconnected", sys_error:"Error: ",
-    peer_label:"Peer: ", peer_connected:"Connected ✓", peer_peer:"Peer"
+    peer_label:"Peer: ", peer_connected:"Connected ✓", peer_peer:"Peer",
+    btn_copy:"Copy", btn_copy_file:"Copy file text", btn_preview_html:"Preview HTML", btn_download:"Download file", mime_fallback:"File"
   }
 };
 let currentLang = localStorage.getItem('rok_lang') || (navigator.language && navigator.language.startsWith('fa') ? 'fa' : 'fa');
@@ -408,6 +412,7 @@ function setLang(lang){
   document.body.dir = lang === 'fa' ? 'rtl' : 'ltr';
   document.getElementById('btnFa')?.classList.toggle('active', lang==='fa');
   document.getElementById('btnEn')?.classList.toggle('active', lang==='en');
+  const pt = I18N[lang]?.page_title; if(pt) document.title = pt.replace(/<[^>]*>/g,'');
   const dict = I18N[lang] || I18N.fa;
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     const k = el.getAttribute('data-i18n');
@@ -420,6 +425,7 @@ function setLang(lang){
     const k = el.getAttribute('data-i18n-placeholder');
     if(dict[k] !== undefined) el.placeholder = dict[k];
   });
+  renderAvatar();
   // update invite badge
   const ib=document.querySelector('.invite-badge'); if(ib){ const svg=ib.querySelector('svg'); const txt=dict.invite_badge||'Invite'; ib.innerHTML=''; if(svg) ib.appendChild(svg); ib.append(' '+txt); }
   // update invite-mode texts if active
@@ -461,7 +467,7 @@ function renderAvatar(){
     pv.innerHTML='<img src="'+avatarImg+'" alt="">';
   } else {
     pv.style.background=avatarColor;
-    pv.innerHTML='<span class="avatar-initials">'+initials(name||'؟')+'</span>';
+    pv.innerHTML='<span class="avatar-initials">'+initials(name|| (currentLang==='en'?'?':'؟'))+'</span>';
   }
   document.querySelectorAll('.swatch').forEach(s=> s.classList.toggle('active', s.style.background===avatarColor && !avatarImg));
 }
@@ -479,7 +485,7 @@ function setPeerAvatar(av){
   const el=$('peerAvatar');
   if(!el) return;
   if(av && av.img){ el.style.background='transparent'; el.innerHTML='<img src="'+av.img+'" alt="">'; }
-  else if(av){ el.style.background=av.color||'#242428'; el.textContent=av.initials||'؟'; }
+  else if(av){ el.style.background=av.color||'#242428'; el.textContent=av.initials|| (currentLang==='en'?'?':'؟'); }
 }
 function onFilePicked(){
   const f=$('fileInput').files[0];
@@ -617,7 +623,7 @@ function addMsg(text, me, name, time, avatar){
   div.innerHTML = '<div class="meta"><b>'+esc(name||(me?'تو':'دوست'))+'</b></div>'
     + '<div class="txt">'+esc(text)+'</div>'
     + '<span class="time">'+when+'</span>'
-    + '<div class="actions"><button onclick="copyText(this)"><svg class="lx-icon lx-icon--sm" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v3"/></svg> کپی</button></div>';
+    + '<div class="actions"><button onclick="copyText(this)"><svg class="lx-icon lx-icon--sm" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v3"/></svg> '+t('btn_copy')+'</button></div>';
   box.appendChild(div); box.scrollTop=box.scrollHeight;
 }
 function addFileMsg(d, me){
@@ -641,7 +647,7 @@ function addFileMsg(d, me){
     const short = d._previewText.length>1200 ? d._previewText.slice(0,1200)+'…' : d._previewText;
     const isHtml = lower.endsWith('.html')||lower.endsWith('.htm');
     previewHtml = '<div style="margin-top:8px;max-height:160px;overflow:auto;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:8px;font-family:JetBrains Mono,monospace;font-size:11px;white-space:pre-wrap;direction:ltr;text-align:left;word-break:break-word">'+esc(short)+'</div>'
-      + '<div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap"><button onclick="copyPreview(this)">کپی متن فایل</button>'+(isHtml?'<button onclick="previewHtmlFile(this)">پیشنمایش HTML</button>':'')+'</div>';
+      + '<div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap"><button onclick="copyPreview(this)">'+t('btn_copy_file')+'</button>'+(isHtml?'<button onclick="previewHtmlFile(this)">'+t('btn_preview_html')+'</button>':'')+'</div>';
     div.dataset.fullText = d._previewText;
     div.dataset.blobUrl = url;
     div.dataset.fileName = d.name;
@@ -649,7 +655,7 @@ function addFileMsg(d, me){
   const mimeLabel = esc(d.mime|| (isTextPreview ? 'text/'+(lower.endsWith('.md')?'markdown':'plain') : 'application/octet-stream'));
   div.innerHTML = '<div class="meta"><b>'+esc(d.sender|| (me?myName:'دوست'))+'</b><span>'+sizeStr+'</span></div>'
     + '<div style="display:flex;align-items:center;gap:6px"><svg class="lx-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg> '+esc(d.name)+'</div>'
-    + '<div class="file-card">'+(url?'<a href="'+url+'" download="'+escAttr(d.name)+'">دانلود فایل</a>':'<span style="color:var(--text-muted)">در حال آمادهسازی...</span>')+' <span style="font-size:11px;color:var(--text-muted)">'+mimeLabel+'</span></div>'
+    + '<div class="file-card">'+(url?'<a href="'+url+'" download="'+escAttr(d.name)+'">'+t('btn_download')+'</a>':'<span style="color:var(--text-muted)">...</span>')+' <span style="font-size:11px;color:var(--text-muted)">'+mimeLabel+'</span></div>'
     + previewHtml
     + '<span class="time">'+when+'</span>';
   box.appendChild(div); box.scrollTop=box.scrollHeight;
